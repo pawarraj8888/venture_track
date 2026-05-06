@@ -181,8 +181,8 @@ h1{font-size:52px;font-weight:700;letter-spacing:-.035em;line-height:1.06;color:
 <div class="srccard gl">
   <div class="srctitle">Data sources and methodology</div>
   <div class="srcgrid">
-    <div class="srcrow"><span class="srcdot"></span><span>Funding round valuations from PitchBook and Crunchbase public data (2024 to 2025)</span></div>
-    <div class="srcrow"><span class="srcdot"></span><span>Revenue estimates from press releases, media coverage, and Form D filings (SEC EDGAR)</span></div>
+    <div class="srcrow"><span class="srcdot"></span><span>Funding round valuations from PitchBook, Crunchbase, Sacra, and company press releases (2025–2026)</span></div>
+    <div class="srcrow"><span class="srcdot"></span><span>Revenue estimates from press releases, media coverage, IPO filings, and Form D filings (SEC EDGAR)</span></div>
     <div class="srcrow"><span class="srcdot"></span><span>Public comp multiples benchmarked against Palantir, Snowflake, CrowdStrike, SentinelOne (May 2026)</span></div>
     <div class="srcrow"><span class="srcdot"></span><span>NRR proxied from customer expansion signals, public contract announcements, cohort data</span></div>
     <div class="srcrow"><span class="srcdot"></span><span>Burn multiple estimated from headcount growth vs revenue growth rate (LinkedIn, job postings)</span></div>
@@ -192,19 +192,78 @@ h1{font-size:52px;font-weight:700;letter-spacing:-.035em;line-height:1.06;color:
   </div>
 </div>
 
-<div class="byline">Built by <a href="https://pawarraj8888.github.io/spy-orb-journal/dashboard.html" target="_blank">Rajvardhan Pawar</a> &middot; NYU MFE &middot; GoalVest Associate Application &middot; May 2026</div>
+<div class="byline">Built by <a href="https://pawarraj8888.github.io/spy-orb-journal/dashboard.html" target="_blank">Rajvardhan Pawar</a> &middot; NYU MFE &middot; GoalVest Associate Application &middot; May 2026 &middot; <em>Data refreshed May 2026</em></div>
 </div>
 
 <script>
+// ─────────────────────────────────────────────────────────────────────────────
+// COMPANY DATA — Updated May 2026 with latest public figures
+// ─────────────────────────────────────────────────────────────────────────────
 const cos=[
-  {name:"Anduril",sector:"Defense",init:"AN",ab:"rgba(0,122,255,0.12)",ac:"#007aff",val:28,rev:1.0,gr:140,gm:52,bm:1.2,nrr:185,pcm:18,oe:22,sig:"strong",arr:"$1.0B",rwy:"36mo+",emp:"3,800",kr:"Contract concentration risk",src:"Series F $1.5B (Dec 2023). Revenue from Bloomberg intelligence estimates."},
-  {name:"Harvey",sector:"AI",init:"HV",ab:"rgba(52,199,89,0.12)",ac:"#34c759",val:3.0,rev:0.1,gr:300,gm:78,bm:2.1,nrr:165,pcm:22,oe:2.4,sig:"strong",arr:"$100M ARR",rwy:"24mo",emp:"400",kr:"LLM commoditization risk",src:"Series C $300M (Apr 2024). ARR from TechCrunch reporting."},
-  {name:"Glean",sector:"AI",init:"GL",ab:"rgba(0,122,255,0.1)",ac:"#007aff",val:4.6,rev:0.15,gr:200,gm:74,bm:1.8,nrr:148,pcm:20,oe:3.8,sig:"strong",arr:"$150M ARR",rwy:"30mo",emp:"900",kr:"Microsoft Copilot competition",src:"Series E $260M (Sep 2024, $4.6B). ARR from The Information."},
-  {name:"Klarna",sector:"Fintech",init:"KL",ab:"rgba(175,82,222,0.12)",ac:"#af52de",val:15,rev:2.8,gr:24,gm:58,bm:0.8,nrr:112,pcm:8,oe:12,sig:"moderate",arr:"$2.8B revenue",rwy:"Profitable",emp:"3,800",kr:"BNPL regulatory pressure",src:"IPO S-1 filing (2025). Revenue from audited financials."},
-  {name:"Shield AI",sector:"Defense",init:"SA",ab:"rgba(90,200,250,0.12)",ac:"#5ac8fa",val:5.3,rev:0.2,gr:85,gm:61,bm:1.6,nrr:142,pcm:16,oe:4.2,sig:"strong",arr:"$200M ARR",rwy:"28mo",emp:"1,000",kr:"DoD procurement timeline",src:"Series F $200M (Feb 2024). Secondary market data from Caplight."},
-  {name:"Abridge",sector:"AI",init:"AB",ab:"rgba(52,199,89,0.1)",ac:"#30d158",val:2.8,rev:0.08,gr:250,gm:80,bm:2.4,nrr:158,pcm:24,oe:2.2,sig:"strong",arr:"$80M ARR",rwy:"20mo",emp:"250",kr:"Epic/Cerner integration dependency",src:"Series C $150M (Feb 2024). ARR from STAT News reporting."},
-  {name:"Chime",sector:"Fintech",init:"CH",ab:"rgba(175,82,222,0.1)",ac:"#bf5af2",val:25,rev:1.3,gr:18,gm:62,bm:1.1,nrr:108,pcm:10,oe:22,sig:"watch",arr:"$1.3B revenue",rwy:"24mo",emp:"1,500",kr:"Valuation vs growth mismatch",src:"Last round $750M (2021, $25B val). Revenue from Bloomberg estimates."},
-  {name:"OLIPOP",sector:"Consumer",init:"OL",ab:"rgba(255,149,0,0.12)",ac:"#ff9500",val:1.8,rev:0.4,gr:65,gm:48,bm:1.3,nrr:125,pcm:6,oe:1.5,sig:"moderate",arr:"$400M revenue",rwy:"18mo",emp:"300",kr:"CPG margin compression",src:"Series C $50M (2023). Revenue from Forbes reporting."}
+  {
+    name:"Anduril",sector:"Defense",init:"AN",ab:"rgba(0,122,255,0.12)",ac:"#007aff",
+    // Series G Jun 2025: $30.5B val; ~$1B rev in 2024 (doubled YoY); seeking $4B at ~$60B (early 2026)
+    val:30.5,rev:1.0,gr:100,gm:52,bm:1.2,nrr:185,pcm:18,oe:24,
+    sig:"strong",arr:"~$1.0B revenue (2024)",rwy:"36mo+",emp:"5,000+",
+    kr:"Contract concentration & IVAS execution risk",
+    src:"Series G $2.5B at $30.5B (Jun 2025, TechCrunch/Fortune). Revenue doubled to ~$1B in 2024 per company statement. Seeking $4B at ~$60B in 2026 per Sacra/WSJ."
+  },
+  {
+    name:"Harvey",sector:"AI",init:"HV",ab:"rgba(52,199,89,0.12)",ac:"#34c759",
+    // Series (Mar 2026): $200M at $11B val; ARR $190M end-2025 (up from $100M Aug 2025)
+    val:11.0,rev:0.19,gr:190,gm:78,bm:2.1,nrr:165,pcm:22,oe:9.0,
+    sig:"strong",arr:"~$190M ARR (Dec 2025)",rwy:"24mo+",emp:"700+",
+    kr:"LLM commoditization & frontier model competition",
+    src:"$200M round at $11B val co-led by GIC & Sequoia (Mar 2026). ARR hit $190M by end-2025 per CEO LinkedIn post (TechCrunch). 100k+ lawyers across 1,300 orgs."
+  },
+  {
+    name:"Glean",sector:"AI",init:"GL",ab:"rgba(0,122,255,0.1)",ac:"#007aff",
+    // Series F Jun 2025: $150M at $7.2B; ARR $200M (doubled in 9mo, Dec 2025)
+    val:7.2,rev:0.20,gr:100,gm:74,bm:1.8,nrr:148,pcm:20,oe:6.0,
+    sig:"strong",arr:"$200M ARR (Dec 2025)",rwy:"30mo+",emp:"1,528",
+    kr:"Microsoft 365 Copilot competition",
+    src:"Series F $150M at $7.2B (Jun 2025, Wellington led). ARR doubled to $200M in 9 months per Glean/Futurum (Apr 2026). 850+ team members."
+  },
+  {
+    name:"Klarna",sector:"Fintech",init:"KL",ab:"rgba(175,82,222,0.12)",ac:"#af52de",
+    // IPO Sep 2025: priced at $40/share, $15.1B val; 12-mo revenue $3.01B (+17% YoY)
+    val:15.1,rev:3.0,gr:17,gm:58,bm:0.8,nrr:112,pcm:8,oe:15.1,
+    sig:"moderate",arr:"$3.0B revenue (TTM Jun 2025)",rwy:"Public (IPO Sep 2025)",emp:"3,500",
+    kr:"BNPL regulatory pressure & net loss trajectory",
+    src:"IPO priced $40/share at $15.1B val (Sep 2025, Goldman/JPM/MS). TTM revenue $3.01B (+17% YoY) per IPO S-1. 100M+ active consumers."
+  },
+  {
+    name:"Shield AI",sector:"Defense",init:"SA",ab:"rgba(90,200,250,0.12)",ac:"#5ac8fa",
+    // Series G Mar 2026: $2B at $12.7B val; FY2025 rev ~$300M; projecting $540M+ in 2026
+    val:12.7,rev:0.30,gr:80,gm:61,bm:1.6,nrr:142,pcm:16,oe:10.0,
+    sig:"strong",arr:"~$300M revenue (FY Mar 2025)",rwy:"36mo+",emp:"1,319",
+    kr:"DoD procurement timeline & CCA program competition",
+    src:"Series G $2B ($1.5B equity + $500M Blackstone) at $12.7B (Mar 2026, Advent/JPMorgan led). FY2025 rev ~$300M, projecting $540M+ in 2026 (Fortune, Apr 2026)."
+  },
+  {
+    name:"Abridge",sector:"AI",init:"AB",ab:"rgba(52,199,89,0.1)",ac:"#30d158",
+    // Series E Jun 2025: $300M at $5.3B val; contracted ARR $117M Q1 2025
+    val:5.3,rev:0.12,gr:250,gm:80,bm:2.4,nrr:158,pcm:24,oe:4.5,
+    sig:"strong",arr:"$117M contracted ARR (Q1 2025)",rwy:"24mo+",emp:"600+",
+    kr:"Epic/Cerner platform integration dependency",
+    src:"Series E $300M at $5.3B (Jun 2025, a16z led w/ Khosla). Contracted ARR $117M in Q1 2025 (The Information). 150+ health systems, Kaiser & UPMC flagship deployments."
+  },
+  {
+    name:"Chime",sector:"Fintech",init:"CH",ab:"rgba(175,82,222,0.1)",ac:"#bf5af2",
+    // IPO Jun 2025: $27/share, $11.6B val; 2025 revenue $2.19B (+31% YoY); now public (CHYM)
+    val:11.6,rev:2.19,gr:31,gm:62,bm:1.1,nrr:108,pcm:10,oe:11.6,
+    sig:"moderate",arr:"$2.19B revenue (FY 2025)",rwy:"Public (IPO Jun 2025)",emp:"1,500",
+    kr:"Interchange revenue concentration & credit loss risk (MyPay)",
+    src:"IPO Jun 12 2025 at $27/share, $11.6B val (CNBC). FY2025 revenue $2.19B (+31% YoY) per stockanalysis.com. 9.1M active members as of Q3 2025."
+  },
+  {
+    name:"OLIPOP",sector:"Consumer",init:"OL",ab:"rgba(255,149,0,0.12)",ac:"#ff9500",
+    // Series C Feb 2025: $50M at $1.85B val; 2024 revenue $400M (doubled YoY), profitable
+    val:1.85,rev:0.40,gr:65,gm:48,bm:1.3,nrr:125,pcm:6,oe:1.6,
+    sig:"moderate",arr:"$400M+ revenue (2024)",rwy:"Profitable",emp:"195",
+    kr:"CPG margin compression & legacy soda counteroffensive",
+    src:"Series C $50M at $1.85B (Feb 2025, JP Morgan led). 2024 sales $400M+ (doubled YoY, profitable). 65,000+ retail doors. Final round per CEO — IPO or M&A next."
+  }
 ];
 
 let W={growth:.30,margin:.20,val:.20,nrr:.15,burn:.15};
@@ -332,7 +391,7 @@ function selectC(name){
 let chart=null;
 function renderChart(){
   const ctx=document.getElementById('sc').getContext('2d');
-  const data=cos.map(c=>{const s2=sc(c);return{x:s2.comp,y:er(c,s2),label:c.name,color:c.ac,r:Math.max(7,Math.min(22,c.val/1.8))};});
+  const data=cos.map(c=>{const s2=sc(c);return{x:s2.comp,y:er(c,s2),label:c.name,color:c.ac,r:Math.max(7,Math.min(22,c.val/3))};});
   if(chart)chart.destroy();
   chart=new Chart(ctx,{
     type:'bubble',
