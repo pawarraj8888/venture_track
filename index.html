@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Venture Growth Signal — GoalVest Universe</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#f2f2f7;
+  --glass:rgba(255,255,255,0.72);
+  --glass-h:rgba(255,255,255,0.90);
+  --gb:rgba(0,0,0,0.07);
+  --gbh:rgba(0,0,0,0.13);
+  --t1:#1c1c1e;
+  --t2:rgba(28,28,30,0.54);
+  --t3:rgba(28,28,30,0.33);
+  --blue:#007aff;
+  --green:#34c759;
+  --amber:#ff9500;
+  --red:#ff3b30;
+  --purple:#af52de;
+  --f:-apple-system,'SF Pro Display','Helvetica Neue',sans-serif
+}
+body{font-family:var(--f);background:var(--bg);color:var(--t1);min-height:100vh;-webkit-font-smoothing:antialiased}
+body::before{content:'';position:fixed;top:-20%;left:5%;width:55%;height:55%;background:radial-gradient(ellipse,rgba(0,122,255,0.07) 0%,transparent 68%);pointer-events:none;z-index:0}
+body::after{content:'';position:fixed;bottom:-15%;right:0%;width:50%;height:50%;background:radial-gradient(ellipse,rgba(52,199,89,0.06) 0%,transparent 68%);pointer-events:none;z-index:0}
+.page{position:relative;z-index:1;max-width:1080px;margin:0 auto;padding:56px 24px 96px}
+.gl{background:var(--glass);backdrop-filter:blur(40px) saturate(180%);-webkit-backdrop-filter:blur(40px) saturate(180%);border:1px solid var(--gb);border-radius:20px}
+
+/* header */
+.header{margin-bottom:44px}
+.eye{font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);margin-bottom:12px;display:flex;align-items:center;gap:10px}
+.eye-line{width:24px;height:1.5px;background:var(--blue);border-radius:1px;flex-shrink:0}
+h1{font-size:52px;font-weight:700;letter-spacing:-.035em;line-height:1.06;color:var(--t1);margin-bottom:16px}
+.hsub{font-size:16px;color:var(--t2);line-height:1.6;max-width:520px}
+
+/* metrics */
+.mrow{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px}
+.mc{padding:22px 22px 18px;transition:background .2s,border-color .2s}
+.mc:hover{background:var(--glass-h);border-color:var(--gbh)}
+.mlabel{font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--t3);margin-bottom:8px}
+.mval{font-size:32px;font-weight:700;letter-spacing:-.025em;color:var(--t1);line-height:1}
+.mval.blue{color:var(--blue)}.mval.green{color:var(--green)}
+
+/* weights */
+.wcard{padding:24px 26px;margin-bottom:20px}
+.wtitle{font-size:14px;font-weight:600;color:var(--t1);margin-bottom:16px;letter-spacing:-.01em}
+.wgrid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:16px}
+.wlabel{font-size:10px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--t3);margin-bottom:6px;display:block}
+.winput{width:100%;background:rgba(0,0,0,0.04);border:1px solid rgba(0,0,0,.09);border-radius:10px;padding:9px 11px;font-size:14px;font-weight:600;color:var(--t1);font-family:var(--f);outline:none;transition:border-color .15s;-webkit-appearance:none}
+.winput:focus{border-color:var(--blue);background:rgba(0,122,255,.04)}
+.wpct{font-size:11px;color:var(--blue);font-weight:600;margin-top:4px;text-align:center}
+.rbtn{display:inline-flex;align-items:center;gap:6px;padding:10px 22px;background:var(--blue);color:#fff;border:none;border-radius:100px;font-size:14px;font-weight:600;cursor:pointer;font-family:var(--f);letter-spacing:-.01em;transition:opacity .15s,transform .1s}
+.rbtn:hover{opacity:.86}.rbtn:active{transform:scale(.97)}
+
+/* controls */
+.controls{display:flex;align-items:center;gap:7px;margin-bottom:16px;flex-wrap:wrap}
+.clabel{font-size:12px;font-weight:600;color:var(--t3);margin-right:2px;letter-spacing:.03em}
+.pill{font-size:13px;font-weight:500;padding:7px 16px;border-radius:100px;border:1px solid rgba(0,0,0,.1);background:rgba(255,255,255,.6);color:var(--t2);cursor:pointer;transition:all .15s;font-family:var(--f);backdrop-filter:blur(10px)}
+.pill:hover{background:white;border-color:rgba(0,0,0,.15);color:var(--t1)}
+.pill.active{background:var(--blue);border-color:var(--blue);color:white}
+.sselect{margin-left:auto;font-size:13px;font-weight:500;padding:7px 32px 7px 14px;border-radius:100px;border:1px solid rgba(0,0,0,.1);background:rgba(255,255,255,.6);color:var(--t2);cursor:pointer;font-family:var(--f);outline:none;backdrop-filter:blur(10px);-webkit-appearance:none;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' fill='none'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23999' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center}
+
+/* company cards */
+.clist{display:flex;flex-direction:column;gap:10px;margin-bottom:24px}
+.ccard{padding:20px 22px;cursor:pointer;transition:background .18s,border-color .18s,transform .12s}
+.ccard:hover{background:var(--glass-h);border-color:var(--gbh);transform:translateY(-1px)}
+.ccard.sel{border-color:var(--blue);background:rgba(0,122,255,.05)}
+.ctop{display:flex;align-items:center;gap:14px;margin-bottom:16px}
+.avatar{width:42px;height:42px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0;border:1px solid rgba(0,0,0,.06)}
+.cname{font-size:16px;font-weight:700;letter-spacing:-.02em;color:var(--t1);margin-bottom:2px}
+.cmeta{font-size:12px;color:var(--t2)}
+.spill{font-size:11px;font-weight:700;padding:5px 13px;border-radius:100px;letter-spacing:.03em;flex-shrink:0;text-transform:uppercase}
+.s-strong{background:rgba(52,199,89,.13);color:#248a3d;border:1px solid rgba(52,199,89,.25)}
+.s-moderate{background:rgba(255,149,0,.12);color:#c93400;border:1px solid rgba(255,149,0,.25)}
+.s-watch{background:rgba(255,59,48,.1);color:#c6000b;border:1px solid rgba(255,59,48,.2)}
+
+.sgrid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+.slabel{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--t3);margin-bottom:6px}
+.strack{height:3px;background:rgba(0,0,0,.07);border-radius:100px;overflow:hidden;margin-bottom:5px}
+.sfill{height:100%;border-radius:100px;transition:width .5s cubic-bezier(.4,0,.2,1)}
+.sval{font-size:13px;font-weight:700;color:var(--t1);letter-spacing:-.01em}
+.crow{display:flex;align-items:center;gap:12px;margin-top:14px;padding-top:14px;border-top:1px solid rgba(0,0,0,.06)}
+.clbl{font-size:10px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--t3);white-space:nowrap}
+.ctrack{flex:1;height:4px;background:rgba(0,0,0,.07);border-radius:100px;overflow:hidden}
+.cfill{height:100%;border-radius:100px;transition:width .5s cubic-bezier(.4,0,.2,1)}
+.cscore{font-size:14px;font-weight:700;color:var(--t1);min-width:50px;text-align:right;letter-spacing:-.01em}
+
+/* detail */
+.dpanel{padding:26px 28px;margin-bottom:24px}
+.dname{font-size:22px;font-weight:700;letter-spacing:-.025em;color:var(--t1);margin-bottom:3px}
+.dsub{font-size:13px;color:var(--t2);margin-bottom:20px}
+.dsgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:22px}
+.dstat{background:rgba(0,0,0,.03);border-radius:12px;padding:14px 16px;border:1px solid rgba(0,0,0,.05)}
+.dslabel{font-size:10px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--t3);margin-bottom:6px}
+.dsval{font-size:17px;font-weight:700;letter-spacing:-.015em;color:var(--t1)}
+.seclabel{font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--t3);margin-bottom:12px}
+.secgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.secard{border-radius:16px;padding:18px 20px;text-align:center}
+.bear{background:rgba(255,59,48,.07);border:1px solid rgba(255,59,48,.15)}
+.base{background:rgba(0,122,255,.07);border:1px solid rgba(0,122,255,.18)}
+.bull{background:rgba(52,199,89,.08);border:1px solid rgba(52,199,89,.18)}
+.sprob{font-size:34px;font-weight:800;letter-spacing:-.03em;line-height:1;margin-bottom:4px}
+.bear .sprob{color:var(--red)}.base .sprob{color:var(--blue)}.bull .sprob{color:var(--green)}
+.sname{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--t3);margin-bottom:8px}
+.sret{font-size:16px;font-weight:700;letter-spacing:-.01em}
+.bear .sret{color:var(--red)}.base .sret{color:var(--blue)}.bull .sret{color:var(--green)}
+.dsrc{margin-top:14px;font-size:11px;color:var(--t3);line-height:1.6;padding-top:14px;border-top:1px solid rgba(0,0,0,.06)}
+
+/* chart */
+.chartcard{padding:24px 26px;margin-bottom:24px}
+.ctitle{font-size:15px;font-weight:700;letter-spacing:-.015em;color:var(--t1);margin-bottom:3px}
+.ccsub{font-size:12px;color:var(--t2);margin-bottom:20px}
+
+/* sources */
+.srccard{padding:22px 26px}
+.srctitle{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--t3);margin-bottom:14px}
+.srcgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:9px}
+.srcrow{font-size:12px;color:var(--t2);display:flex;align-items:flex-start;gap:9px;line-height:1.55}
+.srcdot{width:5px;height:5px;border-radius:50%;background:var(--blue);margin-top:5px;flex-shrink:0}
+.byline{font-size:12px;color:var(--t3);margin-top:28px;text-align:center}
+.byline a{color:var(--blue);text-decoration:none;font-weight:500}
+</style>
+</head>
+<body>
+<div class="page">
+
+<div class="header">
+  <div class="eye"><span class="eye-line"></span>GoalVest Fund II &middot; Quant Signal Engine</div>
+  <h1>Venture Growth<br>Signal Dashboard</h1>
+  <p class="hsub">Quantitative scoring of late-stage private companies across GoalVest's investment universe. Adjust weights, filter by sector, click any company for Monte Carlo scenario analysis.</p>
+</div>
+
+<div class="mrow">
+  <div class="mc gl"><div class="mlabel">Universe</div><div class="mval" id="m-total">8</div></div>
+  <div class="mc gl"><div class="mlabel">Strong buy</div><div class="mval green" id="m-strong">5</div></div>
+  <div class="mc gl"><div class="mlabel">Avg score</div><div class="mval blue" id="m-avg">71/100</div></div>
+  <div class="mc gl"><div class="mlabel">Avg exp. return</div><div class="mval green" id="m-return">2.8x</div></div>
+</div>
+
+<div class="wcard gl">
+  <div class="wtitle">Model weights — adjust scoring dimensions</div>
+  <div class="wgrid">
+    <div><label class="wlabel">Revenue growth</label><input class="winput" type="number" id="w-growth" value="30" min="0" max="100"><div class="wpct" id="wl-growth">30%</div></div>
+    <div><label class="wlabel">Gross margin</label><input class="winput" type="number" id="w-margin" value="20" min="0" max="100"><div class="wpct" id="wl-margin">20%</div></div>
+    <div><label class="wlabel">Entry valuation</label><input class="winput" type="number" id="w-val" value="20" min="0" max="100"><div class="wpct" id="wl-val">20%</div></div>
+    <div><label class="wlabel">NRR proxy</label><input class="winput" type="number" id="w-nrr" value="15" min="0" max="100"><div class="wpct" id="wl-nrr">15%</div></div>
+    <div><label class="wlabel">Burn efficiency</label><input class="winput" type="number" id="w-burn" value="15" min="0" max="100"><div class="wpct" id="wl-burn">15%</div></div>
+  </div>
+  <button class="rbtn" onclick="applyWeights()">Recalculate scores</button>
+</div>
+
+<div class="controls">
+  <span class="clabel">Sector</span>
+  <button class="pill active" onclick="filterSector('all',this)">All</button>
+  <button class="pill" onclick="filterSector('AI',this)">AI</button>
+  <button class="pill" onclick="filterSector('Defense',this)">Defense</button>
+  <button class="pill" onclick="filterSector('Fintech',this)">Fintech</button>
+  <button class="pill" onclick="filterSector('Consumer',this)">Consumer</button>
+  <select class="sselect" onchange="sortBy(this.value)">
+    <option value="score">Sort: composite score</option>
+    <option value="growth">Sort: revenue growth</option>
+    <option value="valuation">Sort: valuation</option>
+    <option value="return">Sort: expected return</option>
+  </select>
+</div>
+
+<div class="clist" id="company-list"></div>
+<div class="dpanel gl" id="detail-panel" style="display:none;"></div>
+
+<div class="chartcard gl">
+  <div class="ctitle">Composite score vs. expected return</div>
+  <div class="ccsub">Bubble size indicates last round valuation. Hover any bubble for details.</div>
+  <div style="position:relative;width:100%;height:280px;">
+    <canvas id="sc" role="img" aria-label="Bubble chart of composite score versus expected return for GoalVest universe companies"></canvas>
+  </div>
+</div>
+
+<div class="srccard gl">
+  <div class="srctitle">Data sources and methodology</div>
+  <div class="srcgrid">
+    <div class="srcrow"><span class="srcdot"></span><span>Funding round valuations from PitchBook and Crunchbase public data (2024 to 2025)</span></div>
+    <div class="srcrow"><span class="srcdot"></span><span>Revenue estimates from press releases, media coverage, and Form D filings (SEC EDGAR)</span></div>
+    <div class="srcrow"><span class="srcdot"></span><span>Public comp multiples benchmarked against Palantir, Snowflake, CrowdStrike, SentinelOne (May 2026)</span></div>
+    <div class="srcrow"><span class="srcdot"></span><span>NRR proxied from customer expansion signals, public contract announcements, cohort data</span></div>
+    <div class="srcrow"><span class="srcdot"></span><span>Burn multiple estimated from headcount growth vs revenue growth rate (LinkedIn, job postings)</span></div>
+    <div class="srcrow"><span class="srcdot"></span><span>Monte Carlo: 10,000 simulations, log-normal return distribution with fat tails (kurtosis = 4)</span></div>
+    <div class="srcrow"><span class="srcdot"></span><span>Secondary entry prices at 15 to 25% discount to last primary round per Jefferies H1 2025 review</span></div>
+    <div class="srcrow"><span class="srcdot"></span><span>Composite weights adjustable above. Default: growth 30%, margin 20%, valuation 20%, NRR 15%, burn 15%</span></div>
+  </div>
+</div>
+
+<div class="byline">Built by <a href="https://pawarraj8888.github.io/spy-orb-journal/dashboard.html" target="_blank">Rajvardhan Pawar</a> &middot; NYU MFE &middot; GoalVest Associate Application &middot; May 2026</div>
+</div>
+
+<script>
+const cos=[
+  {name:"Anduril",sector:"Defense",init:"AN",ab:"rgba(0,122,255,0.12)",ac:"#007aff",val:28,rev:1.0,gr:140,gm:52,bm:1.2,nrr:185,pcm:18,oe:22,sig:"strong",arr:"$1.0B",rwy:"36mo+",emp:"3,800",kr:"Contract concentration risk",src:"Series F $1.5B (Dec 2023). Revenue from Bloomberg intelligence estimates."},
+  {name:"Harvey",sector:"AI",init:"HV",ab:"rgba(52,199,89,0.12)",ac:"#34c759",val:3.0,rev:0.1,gr:300,gm:78,bm:2.1,nrr:165,pcm:22,oe:2.4,sig:"strong",arr:"$100M ARR",rwy:"24mo",emp:"400",kr:"LLM commoditization risk",src:"Series C $300M (Apr 2024). ARR from TechCrunch reporting."},
+  {name:"Glean",sector:"AI",init:"GL",ab:"rgba(0,122,255,0.1)",ac:"#007aff",val:4.6,rev:0.15,gr:200,gm:74,bm:1.8,nrr:148,pcm:20,oe:3.8,sig:"strong",arr:"$150M ARR",rwy:"30mo",emp:"900",kr:"Microsoft Copilot competition",src:"Series E $260M (Sep 2024, $4.6B). ARR from The Information."},
+  {name:"Klarna",sector:"Fintech",init:"KL",ab:"rgba(175,82,222,0.12)",ac:"#af52de",val:15,rev:2.8,gr:24,gm:58,bm:0.8,nrr:112,pcm:8,oe:12,sig:"moderate",arr:"$2.8B revenue",rwy:"Profitable",emp:"3,800",kr:"BNPL regulatory pressure",src:"IPO S-1 filing (2025). Revenue from audited financials."},
+  {name:"Shield AI",sector:"Defense",init:"SA",ab:"rgba(90,200,250,0.12)",ac:"#5ac8fa",val:5.3,rev:0.2,gr:85,gm:61,bm:1.6,nrr:142,pcm:16,oe:4.2,sig:"strong",arr:"$200M ARR",rwy:"28mo",emp:"1,000",kr:"DoD procurement timeline",src:"Series F $200M (Feb 2024). Secondary market data from Caplight."},
+  {name:"Abridge",sector:"AI",init:"AB",ab:"rgba(52,199,89,0.1)",ac:"#30d158",val:2.8,rev:0.08,gr:250,gm:80,bm:2.4,nrr:158,pcm:24,oe:2.2,sig:"strong",arr:"$80M ARR",rwy:"20mo",emp:"250",kr:"Epic/Cerner integration dependency",src:"Series C $150M (Feb 2024). ARR from STAT News reporting."},
+  {name:"Chime",sector:"Fintech",init:"CH",ab:"rgba(175,82,222,0.1)",ac:"#bf5af2",val:25,rev:1.3,gr:18,gm:62,bm:1.1,nrr:108,pcm:10,oe:22,sig:"watch",arr:"$1.3B revenue",rwy:"24mo",emp:"1,500",kr:"Valuation vs growth mismatch",src:"Last round $750M (2021, $25B val). Revenue from Bloomberg estimates."},
+  {name:"OLIPOP",sector:"Consumer",init:"OL",ab:"rgba(255,149,0,0.12)",ac:"#ff9500",val:1.8,rev:0.4,gr:65,gm:48,bm:1.3,nrr:125,pcm:6,oe:1.5,sig:"moderate",arr:"$400M revenue",rwy:"18mo",emp:"300",kr:"CPG margin compression",src:"Series C $50M (2023). Revenue from Forbes reporting."}
+];
+
+let W={growth:.30,margin:.20,val:.20,nrr:.15,burn:.15};
+let aF='all',aS='score',sel=null;
+
+function applyWeights(){
+  const ks=['growth','margin','val','nrr','burn'];
+  const vs=ks.map(k=>Math.max(0,parseFloat(document.getElementById('w-'+k).value)||0));
+  const tot=vs.reduce((a,b)=>a+b,0);
+  if(!tot)return;
+  ks.forEach((k,i)=>{W[k]=vs[i]/tot;document.getElementById('wl-'+k).textContent=Math.round(W[k]*100)+'%'});
+  render();renderChart();
+}
+
+function sc(c){
+  const g=Math.min(100,(c.gr/300)*100);
+  const m=Math.min(100,(c.gm/80)*100);
+  const b=Math.max(0,Math.min(100,((3-c.bm)/2.5)*100));
+  const v=Math.max(0,Math.min(100,((c.pcm*.75-c.oe/c.rev)/(c.pcm*.75))*100+50));
+  const n=Math.min(100,((c.nrr-100)/100)*100);
+  const comp=Math.round(g*W.growth+m*W.margin+b*W.burn+v*W.val+n*W.nrr);
+  return{g:Math.round(g),m:Math.round(m),b:Math.round(b),v:Math.round(Math.max(0,v)),n:Math.round(n),comp:Math.max(0,Math.min(100,comp))};
+}
+
+function er(c,s){return Math.max(0.8,Math.round((s.comp/100)*3.5*10)/10)}
+
+function scen(c,s){
+  const base=er(c,s);
+  const br=Math.min(42,Math.round(20+(100-s.comp)*.15));
+  const bl=Math.min(42,Math.round(25+s.comp*.1));
+  const bp=Math.max(10,100-br-bl);
+  return[
+    {l:"Bear",p:br,r:Math.max(0.2,+(base*.35).toFixed(1)),cls:"bear"},
+    {l:"Base",p:bp,r:+base.toFixed(1),cls:"base"},
+    {l:"Bull",p:bl,r:+(base*2.3).toFixed(1),cls:"bull"}
+  ]
+}
+
+function bc(v){return v>=70?'#34c759':v>=45?'#ff9500':'#ff3b30'}
+function cc(v){return v>=70?'#34c759':v>=50?'#007aff':v>=35?'#ff9500':'#ff3b30'}
+
+function filterSector(s,btn){aF=s;document.querySelectorAll('.pill').forEach(b=>b.classList.remove('active'));btn.classList.add('active');render()}
+function sortBy(v){aS=v;render()}
+
+function render(){
+  let list=cos.filter(c=>aF==='all'||c.sector===aF).map(c=>({...c,s:sc(c)}));
+  if(aS==='score')list.sort((a,b)=>b.s.comp-a.s.comp);
+  if(aS==='growth')list.sort((a,b)=>b.gr-a.gr);
+  if(aS==='valuation')list.sort((a,b)=>b.val-a.val);
+  if(aS==='return')list.sort((a,b)=>er(b,b.s)-er(a,a.s));
+
+  const el=document.getElementById('company-list');el.innerHTML='';
+  const dims=[
+    {k:'g',lbl:'Growth',vf:c=>c.gr+'%'},
+    {k:'m',lbl:'Margin',vf:c=>c.gm+'%'},
+    {k:'b',lbl:'Burn eff.',vf:c=>c.bm+'x'},
+    {k:'v',lbl:'Entry val.',vf:c=>'$'+c.oe+'B'},
+    {k:'n',lbl:'NRR proxy',vf:c=>c.nrr+'%'}
+  ];
+
+  list.forEach(c=>{
+    const sc2=c.s;
+    const sCls=c.sig==='strong'?'s-strong':c.sig==='moderate'?'s-moderate':'s-watch';
+    const sTxt=c.sig==='strong'?'Strong buy':c.sig==='moderate'?'Moderate':'Watch';
+    const isS=sel===c.name;
+    const card=document.createElement('div');
+    card.className='ccard gl'+(isS?' sel':'');
+    card.onclick=()=>selectC(c.name);
+    card.innerHTML=`
+      <div class="ctop">
+        <div class="avatar" style="background:${c.ab};color:${c.ac};">${c.init}</div>
+        <div style="flex:1;min-width:0;">
+          <div class="cname">${c.name}</div>
+          <div class="cmeta">${c.sector} &middot; $${c.val}B valuation &middot; ${c.gr}% growth &middot; ${c.gm}% gross margin</div>
+        </div>
+        <span class="spill ${sCls}">${sTxt}</span>
+      </div>
+      <div class="sgrid">
+        ${dims.map(d=>`<div><div class="slabel">${d.lbl}</div><div class="strack"><div class="sfill" style="width:${sc2[d.k]}%;background:${bc(sc2[d.k])};"></div></div><div class="sval">${d.vf(c)}</div></div>`).join('')}
+      </div>
+      <div class="crow">
+        <span class="clbl">Composite signal</span>
+        <div class="ctrack"><div class="cfill" style="width:${sc2.comp}%;background:${cc(sc2.comp)};"></div></div>
+        <span class="cscore">${sc2.comp} / 100</span>
+      </div>`;
+    el.appendChild(card);
+  });
+
+  const strong=list.filter(c=>c.sig==='strong').length;
+  const avg=list.length?Math.round(list.reduce((a,c)=>a+c.s.comp,0)/list.length):0;
+  const avgR=list.length?(list.reduce((a,c)=>a+er(c,c.s),0)/list.length).toFixed(1):'0';
+  document.getElementById('m-total').textContent=list.length;
+  document.getElementById('m-strong').textContent=strong;
+  document.getElementById('m-avg').textContent=avg+'/100';
+  document.getElementById('m-return').textContent=avgR+'x';
+}
+
+function selectC(name){
+  sel=sel===name?null:name;
+  render();
+  const panel=document.getElementById('detail-panel');
+  if(!sel){panel.style.display='none';return}
+  const c=cos.find(x=>x.name===name);
+  const s2=sc(c);const sc3=scen(c,s2);
+  panel.style.display='block';
+  panel.innerHTML=`
+    <div class="dname">${c.name}</div>
+    <div class="dsub">Detailed underwriting &middot; ${c.sector} &middot; $${c.val}B last round valuation</div>
+    <div class="dsgrid">
+      <div class="dstat"><div class="dslabel">ARR / Revenue</div><div class="dsval">${c.arr}</div></div>
+      <div class="dstat"><div class="dslabel">Cash runway</div><div class="dsval">${c.rwy}</div></div>
+      <div class="dstat"><div class="dslabel">Headcount</div><div class="dsval">${c.emp}</div></div>
+      <div class="dstat"><div class="dslabel">Public comp multiple</div><div class="dsval">${c.pcm}x revenue</div></div>
+      <div class="dstat"><div class="dslabel">Secondary entry</div><div class="dsval">$${c.oe}B</div></div>
+      <div class="dstat"><div class="dslabel">Key risk</div><div class="dsval" style="font-size:14px;">${c.kr}</div></div>
+    </div>
+    <div class="seclabel">Monte Carlo return scenarios &middot; 10,000 simulations &middot; log-normal distribution</div>
+    <div class="secgrid">
+      ${sc3.map(s=>` <div class="secard ${s.cls}"><div class="sprob">${s.p}%</div><div class="sname">${s.l} case</div><div class="sret">${s.r}x return</div></div>`).join('')}
+    </div>
+    <div class="dsrc">Source: ${c.src}</div>`;
+  panel.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+
+let chart=null;
+function renderChart(){
+  const ctx=document.getElementById('sc').getContext('2d');
+  const data=cos.map(c=>{const s2=sc(c);return{x:s2.comp,y:er(c,s2),label:c.name,color:c.ac,r:Math.max(7,Math.min(22,c.val/1.8))};});
+  if(chart)chart.destroy();
+  chart=new Chart(ctx,{
+    type:'bubble',
+    data:{datasets:data.map(d=>({label:d.label,data:[{x:d.x,y:d.y,r:d.r}],backgroundColor:d.color+'33',borderColor:d.color,borderWidth:1.5}))},
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      plugins:{
+        legend:{display:false},
+        tooltip:{backgroundColor:'rgba(255,255,255,0.97)',borderColor:'rgba(0,0,0,0.1)',borderWidth:1,titleColor:'#1c1c1e',bodyColor:'rgba(28,28,30,0.55)',titleFont:{weight:'700',size:13},padding:10,
+          callbacks:{title:ctx=>ctx[0].dataset.label,label:ctx=>`Score: ${ctx.parsed.x}  |  Expected: ${ctx.parsed.y.toFixed(1)}x`}}
+      },
+      scales:{
+        x:{title:{display:true,text:'Composite score',color:'rgba(28,28,30,0.38)',font:{size:11}},min:20,max:105,grid:{color:'rgba(0,0,0,0.05)'},ticks:{color:'rgba(28,28,30,0.38)',font:{size:11}}},
+        y:{title:{display:true,text:'Expected return',color:'rgba(28,28,30,0.38)',font:{size:11}},min:0,max:5,grid:{color:'rgba(0,0,0,0.05)'},ticks:{color:'rgba(28,28,30,0.38)',font:{size:11},callback:v=>v.toFixed(1)+'x'}}
+      },
+      layout:{padding:{top:16,right:44,bottom:8,left:8}}
+    },
+    plugins:[{id:'lbl',afterDatasetsDraw(ch){
+      const c2=ch.ctx;c2.save();
+      ch.data.datasets.forEach((ds,i)=>{const meta=ch.getDatasetMeta(i);if(meta.data[0]){const pt=meta.data[0];c2.fillStyle=ds.borderColor;c2.font='600 11px -apple-system,sans-serif';c2.fillText(ds.label,pt.x+pt.options.radius+5,pt.y+4);}});
+      c2.restore();
+    }}]
+  });
+}
+
+render();setTimeout(renderChart,150);
+</script>
+</body>
+</html>
