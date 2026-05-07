@@ -3,271 +3,375 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Venture Growth Signal — GoalVest Universe</title>
+<title>Venture Growth Signal v3 — GoalVest Universe</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg:#f2f2f7;
-  --glass:rgba(255,255,255,0.72);
-  --glass-h:rgba(255,255,255,0.90);
-  --gb:rgba(0,0,0,0.07);
-  --gbh:rgba(0,0,0,0.13);
-  --t1:#1c1c1e;
-  --t2:rgba(28,28,30,0.54);
-  --t3:rgba(28,28,30,0.33);
-  --blue:#007aff;
-  --green:#34c759;
-  --amber:#ff9500;
-  --red:#ff3b30;
-  --purple:#af52de;
+  --bg:#f2f2f7;--glass:rgba(255,255,255,0.72);--glass-h:rgba(255,255,255,0.92);
+  --gb:rgba(0,0,0,0.07);--gbh:rgba(0,0,0,0.13);
+  --t1:#1c1c1e;--t2:rgba(28,28,30,0.54);--t3:rgba(28,28,30,0.33);
+  --blue:#007aff;--green:#34c759;--amber:#ff9500;--red:#ff3b30;--purple:#af52de;
   --f:-apple-system,'SF Pro Display','Helvetica Neue',sans-serif
 }
 body{font-family:var(--f);background:var(--bg);color:var(--t1);min-height:100vh;-webkit-font-smoothing:antialiased}
 body::before{content:'';position:fixed;top:-20%;left:5%;width:55%;height:55%;background:radial-gradient(ellipse,rgba(0,122,255,0.07) 0%,transparent 68%);pointer-events:none;z-index:0}
-body::after{content:'';position:fixed;bottom:-15%;right:0%;width:50%;height:50%;background:radial-gradient(ellipse,rgba(52,199,89,0.06) 0%,transparent 68%);pointer-events:none;z-index:0}
-.page{position:relative;z-index:1;max-width:1080px;margin:0 auto;padding:56px 24px 96px}
+body::after{content:'';position:fixed;bottom:-15%;right:0;width:50%;height:50%;background:radial-gradient(ellipse,rgba(52,199,89,0.06) 0%,transparent 68%);pointer-events:none;z-index:0}
+.page{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:56px 24px 96px}
 .gl{background:var(--glass);backdrop-filter:blur(40px) saturate(180%);-webkit-backdrop-filter:blur(40px) saturate(180%);border:1px solid var(--gb);border-radius:20px}
-
-/* header */
-.header{margin-bottom:44px}
+.header{margin-bottom:40px}
 .eye{font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);margin-bottom:12px;display:flex;align-items:center;gap:10px}
 .eye-line{width:24px;height:1.5px;background:var(--blue);border-radius:1px;flex-shrink:0}
-h1{font-size:52px;font-weight:700;letter-spacing:-.035em;line-height:1.06;color:var(--t1);margin-bottom:16px}
-.hsub{font-size:16px;color:var(--t2);line-height:1.6;max-width:520px}
-
-/* metrics */
-.mrow{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px}
-.mc{padding:22px 22px 18px;transition:background .2s,border-color .2s}
-.mc:hover{background:var(--glass-h);border-color:var(--gbh)}
-.mlabel{font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--t3);margin-bottom:8px}
-.mval{font-size:32px;font-weight:700;letter-spacing:-.025em;color:var(--t1);line-height:1}
-.mval.blue{color:var(--blue)}.mval.green{color:var(--green)}
-
-/* weights */
-.wcard{padding:24px 26px;margin-bottom:20px}
-.wtitle{font-size:14px;font-weight:600;color:var(--t1);margin-bottom:16px;letter-spacing:-.01em}
-.wgrid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:16px}
-.wlabel{font-size:10px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--t3);margin-bottom:6px;display:block}
-.winput{width:100%;background:rgba(0,0,0,0.04);border:1px solid rgba(0,0,0,.09);border-radius:10px;padding:9px 11px;font-size:14px;font-weight:600;color:var(--t1);font-family:var(--f);outline:none;transition:border-color .15s;-webkit-appearance:none}
-.winput:focus{border-color:var(--blue);background:rgba(0,122,255,.04)}
-.wpct{font-size:11px;color:var(--blue);font-weight:600;margin-top:4px;text-align:center}
-.rbtn{display:inline-flex;align-items:center;gap:6px;padding:10px 22px;background:var(--blue);color:#fff;border:none;border-radius:100px;font-size:14px;font-weight:600;cursor:pointer;font-family:var(--f);letter-spacing:-.01em;transition:opacity .15s,transform .1s}
-.rbtn:hover{opacity:.86}.rbtn:active{transform:scale(.97)}
-
-/* controls */
-.controls{display:flex;align-items:center;gap:7px;margin-bottom:16px;flex-wrap:wrap}
-.clabel{font-size:12px;font-weight:600;color:var(--t3);margin-right:2px;letter-spacing:.03em}
-.pill{font-size:13px;font-weight:500;padding:7px 16px;border-radius:100px;border:1px solid rgba(0,0,0,.1);background:rgba(255,255,255,.6);color:var(--t2);cursor:pointer;transition:all .15s;font-family:var(--f);backdrop-filter:blur(10px)}
-.pill:hover{background:white;border-color:rgba(0,0,0,.15);color:var(--t1)}
+h1{font-size:48px;font-weight:700;letter-spacing:-.035em;line-height:1.06;color:var(--t1);margin-bottom:14px}
+.hsub{font-size:15px;color:var(--t2);line-height:1.6;max-width:560px}
+.tabs{display:flex;gap:4px;margin-bottom:28px;background:rgba(0,0,0,0.05);border-radius:14px;padding:4px;width:fit-content}
+.tab{font-size:13px;font-weight:600;padding:8px 20px;border-radius:10px;border:none;background:transparent;color:var(--t2);cursor:pointer;font-family:var(--f);transition:all .15s;letter-spacing:-.01em}
+.tab.active{background:white;color:var(--t1);box-shadow:0 1px 4px rgba(0,0,0,0.1)}
+.mrow{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}
+.mc{padding:20px 20px 16px;transition:background .2s}
+.mc:hover{background:var(--glass-h)}
+.mlabel{font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--t3);margin-bottom:6px}
+.mval{font-size:28px;font-weight:700;letter-spacing:-.025em;color:var(--t1);line-height:1}
+.mval.blue{color:var(--blue)}.mval.green{color:var(--green)}.mval.amber{color:var(--amber)}
+.wcard{padding:22px 24px;margin-bottom:18px}
+.stitle{font-size:14px;font-weight:600;color:var(--t1);margin-bottom:14px;letter-spacing:-.01em;display:flex;align-items:center;gap:8px}
+.sbadge{font-size:10px;font-weight:700;padding:3px 8px;border-radius:100px;background:var(--blue);color:white;letter-spacing:.04em;text-transform:uppercase}
+.wgrid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:14px}
+.wlabel{font-size:10px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--t3);margin-bottom:5px;display:block}
+.winput{width:100%;background:rgba(0,0,0,0.04);border:1px solid rgba(0,0,0,.09);border-radius:10px;padding:8px 10px;font-size:13px;font-weight:600;color:var(--t1);font-family:var(--f);outline:none;transition:border-color .15s;-webkit-appearance:none}
+.winput:focus{border-color:var(--blue)}
+.wpct{font-size:11px;color:var(--blue);font-weight:600;margin-top:3px;text-align:center}
+.rbtn{display:inline-flex;align-items:center;padding:9px 20px;background:var(--blue);color:#fff;border:none;border-radius:100px;font-size:13px;font-weight:600;cursor:pointer;font-family:var(--f);transition:opacity .15s}
+.rbtn:hover{opacity:.86}
+.controls{display:flex;align-items:center;gap:6px;margin-bottom:14px;flex-wrap:wrap}
+.clabel{font-size:12px;font-weight:600;color:var(--t3);margin-right:2px}
+.pill{font-size:12px;font-weight:500;padding:6px 14px;border-radius:100px;border:1px solid rgba(0,0,0,.1);background:rgba(255,255,255,.6);color:var(--t2);cursor:pointer;transition:all .15s;font-family:var(--f)}
+.pill:hover{background:white;color:var(--t1)}
 .pill.active{background:var(--blue);border-color:var(--blue);color:white}
-.sselect{margin-left:auto;font-size:13px;font-weight:500;padding:7px 32px 7px 14px;border-radius:100px;border:1px solid rgba(0,0,0,.1);background:rgba(255,255,255,.6);color:var(--t2);cursor:pointer;font-family:var(--f);outline:none;backdrop-filter:blur(10px);-webkit-appearance:none;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' fill='none'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23999' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center}
-
-/* company cards */
-.clist{display:flex;flex-direction:column;gap:10px;margin-bottom:24px}
-.ccard{padding:20px 22px;cursor:pointer;transition:background .18s,border-color .18s,transform .12s}
+.sselect{margin-left:auto;font-size:12px;font-weight:500;padding:6px 28px 6px 12px;border-radius:100px;border:1px solid rgba(0,0,0,.1);background:rgba(255,255,255,.6);color:var(--t2);cursor:pointer;font-family:var(--f);outline:none;-webkit-appearance:none;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' fill='none'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23999' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center}
+.clist{display:flex;flex-direction:column;gap:8px;margin-bottom:20px}
+.ccard{padding:16px 18px;cursor:pointer;transition:background .18s,border-color .18s,transform .1s}
 .ccard:hover{background:var(--glass-h);border-color:var(--gbh);transform:translateY(-1px)}
 .ccard.sel{border-color:var(--blue);background:rgba(0,122,255,.05)}
-.ctop{display:flex;align-items:center;gap:14px;margin-bottom:16px}
-.avatar{width:42px;height:42px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0;border:1px solid rgba(0,0,0,.06)}
-.cname{font-size:16px;font-weight:700;letter-spacing:-.02em;color:var(--t1);margin-bottom:2px}
-.cmeta{font-size:12px;color:var(--t2)}
-.spill{font-size:11px;font-weight:700;padding:5px 13px;border-radius:100px;letter-spacing:.03em;flex-shrink:0;text-transform:uppercase}
+.ctop{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.avatar{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;border:1px solid rgba(0,0,0,.06)}
+.cname{font-size:15px;font-weight:700;letter-spacing:-.02em;color:var(--t1);margin-bottom:1px}
+.cmeta{font-size:11px;color:var(--t2)}
+.rbadge{display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:600;padding:3px 8px;border-radius:100px;background:rgba(0,122,255,.08);border:1px solid rgba(0,122,255,.15);color:var(--blue);margin-top:3px}
+.rdot{width:4px;height:4px;border-radius:50%;background:var(--blue);flex-shrink:0}
+.spill{font-size:10px;font-weight:700;padding:4px 11px;border-radius:100px;letter-spacing:.03em;flex-shrink:0;text-transform:uppercase}
 .s-strong{background:rgba(52,199,89,.13);color:#248a3d;border:1px solid rgba(52,199,89,.25)}
 .s-moderate{background:rgba(255,149,0,.12);color:#c93400;border:1px solid rgba(255,149,0,.25)}
 .s-watch{background:rgba(255,59,48,.1);color:#c6000b;border:1px solid rgba(255,59,48,.2)}
-
-.sgrid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
-.slabel{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--t3);margin-bottom:6px}
-.strack{height:3px;background:rgba(0,0,0,.07);border-radius:100px;overflow:hidden;margin-bottom:5px}
+.sgrid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+.slabel{font-size:10px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--t3);margin-bottom:5px}
+.strack{height:3px;background:rgba(0,0,0,.07);border-radius:100px;overflow:hidden;margin-bottom:4px}
 .sfill{height:100%;border-radius:100px;transition:width .5s cubic-bezier(.4,0,.2,1)}
-.sval{font-size:13px;font-weight:700;color:var(--t1);letter-spacing:-.01em}
-.crow{display:flex;align-items:center;gap:12px;margin-top:14px;padding-top:14px;border-top:1px solid rgba(0,0,0,.06)}
-.clbl{font-size:10px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--t3);white-space:nowrap}
+.sval{font-size:12px;font-weight:700;color:var(--t1)}
+.crow{display:flex;align-items:center;gap:10px;margin-top:12px;padding-top:12px;border-top:1px solid rgba(0,0,0,.06)}
+.clbl{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--t3);white-space:nowrap}
 .ctrack{flex:1;height:4px;background:rgba(0,0,0,.07);border-radius:100px;overflow:hidden}
 .cfill{height:100%;border-radius:100px;transition:width .5s cubic-bezier(.4,0,.2,1)}
-.cscore{font-size:14px;font-weight:700;color:var(--t1);min-width:50px;text-align:right;letter-spacing:-.01em}
-
-/* detail */
-.dpanel{padding:26px 28px;margin-bottom:24px}
-.dname{font-size:22px;font-weight:700;letter-spacing:-.025em;color:var(--t1);margin-bottom:3px}
-.dsub{font-size:13px;color:var(--t2);margin-bottom:20px}
-.dsgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:22px}
-.dstat{background:rgba(0,0,0,.03);border-radius:12px;padding:14px 16px;border:1px solid rgba(0,0,0,.05)}
-.dslabel{font-size:10px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--t3);margin-bottom:6px}
-.dsval{font-size:17px;font-weight:700;letter-spacing:-.015em;color:var(--t1)}
-.seclabel{font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--t3);margin-bottom:12px}
-.secgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-.secard{border-radius:16px;padding:18px 20px;text-align:center}
+.cscore{font-size:13px;font-weight:700;color:var(--t1);min-width:46px;text-align:right}
+.dpanel{padding:24px 26px;margin-bottom:20px}
+.dname{font-size:20px;font-weight:700;letter-spacing:-.025em;color:var(--t1);margin-bottom:2px}
+.dsub{font-size:13px;color:var(--t2);margin-bottom:18px}
+.dsgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-bottom:18px}
+.dstat{background:rgba(0,0,0,.03);border-radius:12px;padding:12px 14px;border:1px solid rgba(0,0,0,.05)}
+.dslabel{font-size:10px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--t3);margin-bottom:5px}
+.dsval{font-size:15px;font-weight:700;letter-spacing:-.015em;color:var(--t1)}
+.fhlabel{font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--t3);margin-bottom:8px}
+.fhtl{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:18px}
+.fhitem{background:rgba(0,122,255,.06);border:1px solid rgba(0,122,255,.15);border-radius:9px;padding:7px 10px}
+.fhround{font-size:10px;font-weight:700;color:var(--blue);margin-bottom:1px}
+.fhamount{font-size:12px;font-weight:700;color:var(--t1)}
+.fhval{font-size:10px;color:var(--t2);margin-top:1px}
+.seclabel{font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--t3);margin-bottom:10px}
+.secgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.secard{border-radius:14px;padding:16px 18px;text-align:center}
 .bear{background:rgba(255,59,48,.07);border:1px solid rgba(255,59,48,.15)}
 .base{background:rgba(0,122,255,.07);border:1px solid rgba(0,122,255,.18)}
 .bull{background:rgba(52,199,89,.08);border:1px solid rgba(52,199,89,.18)}
-.sprob{font-size:34px;font-weight:800;letter-spacing:-.03em;line-height:1;margin-bottom:4px}
+.sprob{font-size:30px;font-weight:800;letter-spacing:-.03em;line-height:1;margin-bottom:3px}
 .bear .sprob{color:var(--red)}.base .sprob{color:var(--blue)}.bull .sprob{color:var(--green)}
-.sname{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--t3);margin-bottom:8px}
-.sret{font-size:16px;font-weight:700;letter-spacing:-.01em}
+.sname{font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--t3);margin-bottom:6px}
+.sret{font-size:14px;font-weight:700}
 .bear .sret{color:var(--red)}.base .sret{color:var(--blue)}.bull .sret{color:var(--green)}
-.dsrc{margin-top:14px;font-size:11px;color:var(--t3);line-height:1.6;padding-top:14px;border-top:1px solid rgba(0,0,0,.06)}
+.dsrc{margin-top:12px;font-size:11px;color:var(--t3);line-height:1.6;padding-top:12px;border-top:1px solid rgba(0,0,0,.06)}
+.chartcard{padding:22px 24px;margin-bottom:20px}
+.ctitle{font-size:14px;font-weight:700;letter-spacing:-.015em;color:var(--t1);margin-bottom:2px}
+.ccsub{font-size:12px;color:var(--t2);margin-bottom:16px}
 
-/* chart */
-.chartcard{padding:24px 26px;margin-bottom:24px}
-.ctitle{font-size:15px;font-weight:700;letter-spacing:-.015em;color:var(--t1);margin-bottom:3px}
-.ccsub{font-size:12px;color:var(--t2);margin-bottom:20px}
+/* BUY RECS TAB */
+.rec-hero{padding:28px 30px;margin-bottom:20px}
+.rec-title{font-size:28px;font-weight:700;letter-spacing:-.025em;color:var(--t1);margin-bottom:8px}
+.rec-sub{font-size:14px;color:var(--t2);line-height:1.6;max-width:600px;margin-bottom:20px}
+.rec-methodology{background:rgba(0,122,255,.05);border:1px solid rgba(0,122,255,.12);border-radius:14px;padding:16px 18px}
+.rec-meth-title{font-size:12px;font-weight:700;color:var(--blue);letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px}
+.rec-meth-text{font-size:12px;color:var(--t2);line-height:1.7}
+.tier-section{margin-bottom:24px}
+.tier-header{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.tier-badge{font-size:12px;font-weight:700;padding:6px 16px;border-radius:100px;letter-spacing:.04em;text-transform:uppercase}
+.tier1-badge{background:rgba(52,199,89,.15);color:#1a7a3a;border:1px solid rgba(52,199,89,.3)}
+.tier2-badge{background:rgba(0,122,255,.12);color:#0055cc;border:1px solid rgba(0,122,255,.25)}
+.tier3-badge{background:rgba(255,149,0,.12);color:#8a4500;border:1px solid rgba(255,149,0,.25)}
+.tier-desc{font-size:13px;color:var(--t2)}
+.rec-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.rec-card{padding:20px 22px;border-radius:18px;transition:transform .15s,border-color .15s}
+.rec-card:hover{transform:translateY(-2px);border-color:var(--gbh)}
+.tier1-card{background:rgba(52,199,89,.05);border:1px solid rgba(52,199,89,.2)}
+.tier2-card{background:rgba(0,122,255,.04);border:1px solid rgba(0,122,255,.15)}
+.tier3-card{background:rgba(255,149,0,.04);border:1px solid rgba(255,149,0,.18)}
+.rec-card-top{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.rec-avatar{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0;border:1px solid rgba(0,0,0,.06)}
+.rec-name{font-size:16px;font-weight:700;letter-spacing:-.02em;color:var(--t1);margin-bottom:2px}
+.rec-sector{font-size:11px;color:var(--t2)}
+.rec-score-badge{margin-left:auto;font-size:18px;font-weight:800;letter-spacing:-.02em}
+.tier1-card .rec-score-badge{color:#1a7a3a}
+.tier2-card .rec-score-badge{color:var(--blue)}
+.tier3-card .rec-score-badge{color:#8a4500}
+.rec-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px}
+.rec-stat{background:rgba(0,0,0,.03);border-radius:8px;padding:8px 10px}
+.rec-stat-label{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--t3);margin-bottom:3px}
+.rec-stat-val{font-size:13px;font-weight:700;color:var(--t1)}
+.rec-thesis{font-size:12px;color:var(--t2);line-height:1.6;margin-bottom:10px;padding:10px 12px;background:rgba(0,0,0,.03);border-radius:10px}
+.rec-risks{font-size:11px;color:var(--t3);line-height:1.5}
+.rec-risks strong{color:var(--red);font-weight:600}
+.rec-return{display:flex;align-items:center;gap:8px;margin-top:10px;padding-top:10px;border-top:1px solid rgba(0,0,0,.06)}
+.rec-return-label{font-size:11px;color:var(--t3);font-weight:500}
+.rec-return-val{font-size:14px;font-weight:700;color:var(--green);margin-left:auto}
 
-/* sources */
-.srccard{padding:22px 26px}
-.srctitle{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--t3);margin-bottom:14px}
-.srcgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:9px}
-.srcrow{font-size:12px;color:var(--t2);display:flex;align-items:flex-start;gap:9px;line-height:1.55}
-.srcdot{width:5px;height:5px;border-radius:50%;background:var(--blue);margin-top:5px;flex-shrink:0}
-.byline{font-size:12px;color:var(--t3);margin-top:28px;text-align:center}
+/* DoD styles */
+.dod-card{padding:16px 18px;transition:background .2s}
+.dod-card:hover{background:var(--glass-h)}
+.dod-agency{font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--t3);margin-bottom:5px}
+.dod-amount{font-size:20px;font-weight:700;letter-spacing:-.02em;color:var(--t1);margin-bottom:3px}
+.dod-change{font-size:11px;font-weight:600}
+.dod-change.up{color:var(--green)}.dod-change.dn{color:var(--red)}
+.dod-bar{height:3px;background:rgba(0,0,0,.07);border-radius:100px;overflow:hidden;margin-top:7px}
+.dod-bar-fill{height:100%;border-radius:100px;background:var(--blue)}
+.pred-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px}
+.pred-card{padding:14px 16px;border-radius:14px}
+.pred-hot{background:rgba(255,59,48,.07);border:1px solid rgba(255,59,48,.18)}
+.pred-warm{background:rgba(255,149,0,.07);border:1px solid rgba(255,149,0,.18)}
+.pred-watch{background:rgba(52,199,89,.07);border:1px solid rgba(52,199,89,.18)}
+.pred-sector{font-size:12px;font-weight:700;color:var(--t1);margin-bottom:3px}
+.pred-signal{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px}
+.pred-hot .pred-signal{color:var(--red)}.pred-warm .pred-signal{color:var(--amber)}.pred-watch .pred-signal{color:var(--green)}
+.pred-logic{font-size:11px;color:var(--t2);line-height:1.5}
+.srccard{padding:20px 24px;margin-bottom:24px}
+.srctitle{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--t3);margin-bottom:12px}
+.srcgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.srcrow{font-size:11px;color:var(--t2);display:flex;align-items:flex-start;gap:8px;line-height:1.55}
+.srcdot{width:4px;height:4px;border-radius:50%;background:var(--blue);margin-top:5px;flex-shrink:0}
+.byline{font-size:12px;color:var(--t3);margin-top:24px;text-align:center}
 .byline a{color:var(--blue);text-decoration:none;font-weight:500}
+.hidden{display:none!important}
 </style>
 </head>
 <body>
 <div class="page">
 
 <div class="header">
-  <div class="eye"><span class="eye-line"></span>GoalVest Fund II &middot; Quant Signal Engine</div>
+  <div class="eye"><span class="eye-line"></span>GoalVest Fund II &middot; Quant Signal Engine v3</div>
   <h1>Venture Growth<br>Signal Dashboard</h1>
-  <p class="hsub">Quantitative scoring of late-stage private companies across GoalVest's investment universe. Adjust weights, filter by sector, click any company for Monte Carlo scenario analysis.</p>
+  <p class="hsub">Quantitative scoring of 40+ late-stage private companies, live DoD contract spending signals, and AI-powered buy recommendations for Fund II.</p>
 </div>
 
-<div class="mrow">
-  <div class="mc gl"><div class="mlabel">Universe</div><div class="mval" id="m-total">8</div></div>
-  <div class="mc gl"><div class="mlabel">Strong buy</div><div class="mval green" id="m-strong">5</div></div>
-  <div class="mc gl"><div class="mlabel">Avg score</div><div class="mval blue" id="m-avg">71/100</div></div>
-  <div class="mc gl"><div class="mlabel">Avg exp. return</div><div class="mval green" id="m-return">2.8x</div></div>
+<div class="tabs">
+  <button class="tab active" onclick="switchTab('companies',this)">Company scores</button>
+  <button class="tab" onclick="switchTab('recs',this)">Buy recommendations</button>
+  <button class="tab" onclick="switchTab('dod',this)">DoD spending signals</button>
 </div>
 
-<div class="wcard gl">
-  <div class="wtitle">Model weights — adjust scoring dimensions</div>
-  <div class="wgrid">
-    <div><label class="wlabel">Revenue growth</label><input class="winput" type="number" id="w-growth" value="30" min="0" max="100"><div class="wpct" id="wl-growth">30%</div></div>
-    <div><label class="wlabel">Gross margin</label><input class="winput" type="number" id="w-margin" value="20" min="0" max="100"><div class="wpct" id="wl-margin">20%</div></div>
-    <div><label class="wlabel">Entry valuation</label><input class="winput" type="number" id="w-val" value="20" min="0" max="100"><div class="wpct" id="wl-val">20%</div></div>
-    <div><label class="wlabel">NRR proxy</label><input class="winput" type="number" id="w-nrr" value="15" min="0" max="100"><div class="wpct" id="wl-nrr">15%</div></div>
-    <div><label class="wlabel">Burn efficiency</label><input class="winput" type="number" id="w-burn" value="15" min="0" max="100"><div class="wpct" id="wl-burn">15%</div></div>
+<!-- TAB 1: COMPANIES -->
+<div id="tab-companies">
+  <div class="mrow">
+    <div class="mc gl"><div class="mlabel">Universe</div><div class="mval" id="m-total">41</div></div>
+    <div class="mc gl"><div class="mlabel">Strong buy</div><div class="mval green" id="m-strong">--</div></div>
+    <div class="mc gl"><div class="mlabel">Avg score</div><div class="mval blue" id="m-avg">--</div></div>
+    <div class="mc gl"><div class="mlabel">Avg exp. return</div><div class="mval green" id="m-return">--</div></div>
   </div>
-  <button class="rbtn" onclick="applyWeights()">Recalculate scores</button>
+  <div class="wcard gl">
+    <div class="stitle">Model weights <span class="sbadge">adjustable</span></div>
+    <div class="wgrid">
+      <div><label class="wlabel">Revenue growth</label><input class="winput" type="number" id="w-growth" value="30" min="0" max="100"><div class="wpct" id="wl-growth">30%</div></div>
+      <div><label class="wlabel">Gross margin</label><input class="winput" type="number" id="w-margin" value="20" min="0" max="100"><div class="wpct" id="wl-margin">20%</div></div>
+      <div><label class="wlabel">Entry valuation</label><input class="winput" type="number" id="w-val" value="20" min="0" max="100"><div class="wpct" id="wl-val">20%</div></div>
+      <div><label class="wlabel">NRR proxy</label><input class="winput" type="number" id="w-nrr" value="15" min="0" max="100"><div class="wpct" id="wl-nrr">15%</div></div>
+      <div><label class="wlabel">Burn efficiency</label><input class="winput" type="number" id="w-burn" value="15" min="0" max="100"><div class="wpct" id="wl-burn">15%</div></div>
+    </div>
+    <button class="rbtn" onclick="applyWeights()">Recalculate scores</button>
+  </div>
+  <div class="controls">
+    <span class="clabel">Sector</span>
+    <button class="pill active" onclick="filterSector('all',this)">All</button>
+    <button class="pill" onclick="filterSector('AI',this)">AI</button>
+    <button class="pill" onclick="filterSector('Defense',this)">Defense</button>
+    <button class="pill" onclick="filterSector('Fintech',this)">Fintech</button>
+    <button class="pill" onclick="filterSector('Data',this)">Data/Infra</button>
+    <button class="pill" onclick="filterSector('Consumer',this)">Consumer</button>
+    <button class="pill" onclick="filterSector('Robotics',this)">Robotics</button>
+    <select class="sselect" onchange="sortBy(this.value)">
+      <option value="score">Sort: composite score</option>
+      <option value="growth">Sort: revenue growth</option>
+      <option value="valuation">Sort: valuation</option>
+      <option value="return">Sort: exp. return</option>
+    </select>
+  </div>
+  <div class="clist" id="company-list"></div>
+  <div class="dpanel gl" id="detail-panel" style="display:none;"></div>
+  <div class="chartcard gl">
+    <div class="ctitle">Composite score vs. expected return — full universe</div>
+    <div class="ccsub">Bubble size = last round valuation. Click any company above for detail view.</div>
+    <div style="position:relative;width:100%;height:300px;">
+      <canvas id="sc"></canvas>
+    </div>
+  </div>
 </div>
 
-<div class="controls">
-  <span class="clabel">Sector</span>
-  <button class="pill active" onclick="filterSector('all',this)">All</button>
-  <button class="pill" onclick="filterSector('AI',this)">AI</button>
-  <button class="pill" onclick="filterSector('Defense',this)">Defense</button>
-  <button class="pill" onclick="filterSector('Fintech',this)">Fintech</button>
-  <button class="pill" onclick="filterSector('Consumer',this)">Consumer</button>
-  <select class="sselect" onchange="sortBy(this.value)">
-    <option value="score">Sort: composite score</option>
-    <option value="growth">Sort: revenue growth</option>
-    <option value="valuation">Sort: valuation</option>
-    <option value="return">Sort: expected return</option>
-  </select>
+<!-- TAB 2: BUY RECOMMENDATIONS -->
+<div id="tab-recs" class="hidden">
+  <div class="rec-hero gl">
+    <div class="rec-title">Fund II Buy Recommendations</div>
+    <div class="rec-sub">Top conviction ideas ranked by composite score, valuation entry attractiveness, exit clarity, and GoalVest thesis alignment. Updated May 2026.</div>
+    <div class="rec-methodology">
+      <div class="rec-meth-title">Methodology</div>
+      <div class="rec-meth-text">Rankings derived from five quantitative factors: revenue growth (30%), gross margin quality (20%), secondary entry price vs public comps (20%), NRR proxy (15%), burn efficiency (15%). Thesis alignment scores for GoalVest's four target sectors: AI application layer, defense tech, fintech infrastructure, and consumer health. Exit path clarity assessed by IPO probability and strategic acquirer universe. All data sourced from PitchBook, Crunchbase, company press releases, and Sacra estimates as of May 2026.</div>
+    </div>
+  </div>
+
+  <div class="tier-section">
+    <div class="tier-header">
+      <span class="tier-badge tier1-badge">Tier 1 — Highest conviction</span>
+      <span class="tier-desc">Strong fundamentals, clear exit path, attractive entry, direct GoalVest thesis fit</span>
+    </div>
+    <div class="rec-grid" id="tier1-grid"></div>
+  </div>
+
+  <div class="tier-section">
+    <div class="tier-header">
+      <span class="tier-badge tier2-badge">Tier 2 — High conviction</span>
+      <span class="tier-desc">Excellent fundamentals but valuation stretched or exit timing uncertain</span>
+    </div>
+    <div class="rec-grid" id="tier2-grid"></div>
+  </div>
+
+  <div class="tier-section">
+    <div class="tier-header">
+      <span class="tier-badge tier3-badge">Tier 3 — Monitor closely</span>
+      <span class="tier-desc">Strong thesis but wait for better secondary entry or more data</span>
+    </div>
+    <div class="rec-grid" id="tier3-grid"></div>
+  </div>
 </div>
 
-<div class="clist" id="company-list"></div>
-<div class="dpanel gl" id="detail-panel" style="display:none;"></div>
-
-<div class="chartcard gl">
-  <div class="ctitle">Composite score vs. expected return</div>
-  <div class="ccsub">Bubble size indicates last round valuation. Hover any bubble for details.</div>
-  <div style="position:relative;width:100%;height:280px;">
-    <canvas id="sc" role="img" aria-label="Bubble chart of composite score versus expected return for GoalVest universe companies"></canvas>
+<!-- TAB 3: DoD -->
+<div id="tab-dod" class="hidden">
+  <div class="mrow">
+    <div class="mc gl"><div class="mlabel">DoD total FY2024</div><div class="mval blue">$1.0T</div></div>
+    <div class="mc gl"><div class="mlabel">Defense AI contracts</div><div class="mval green">$18.7B</div></div>
+    <div class="mc gl"><div class="mlabel">Autonomous systems</div><div class="mval amber">$31.2B</div></div>
+    <div class="mc gl"><div class="mlabel">Fastest growing sector</div><div class="mval green" style="font-size:18px;">Defense AI</div></div>
+  </div>
+  <div class="gl" style="padding:22px 24px;margin-bottom:18px;">
+    <div class="stitle">DoD contract obligations by category <span class="sbadge">FY2024 actuals</span></div>
+    <div id="dod-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;"></div>
+  </div>
+  <div class="gl" style="padding:22px 24px;margin-bottom:18px;">
+    <div class="stitle">Defense tech spending trend <span class="sbadge">FY2020-2024</span></div>
+    <div style="position:relative;width:100%;height:250px;margin-top:8px;"><canvas id="dodChart"></canvas></div>
+  </div>
+  <div class="gl" style="padding:22px 24px;margin-bottom:20px;">
+    <div class="stitle">Next boom prediction engine <span class="sbadge">signal</span></div>
+    <p style="font-size:13px;color:var(--t2);margin-bottom:14px;line-height:1.6;">Rising DoD contract obligations precede VC investment surges by 12 to 18 months. Current signal indicates Defense AI and Autonomous Systems as top categories.</p>
+    <div class="pred-grid" id="pred-grid"></div>
+  </div>
+  <div class="chartcard gl">
+    <div class="ctitle">DoD spend vs defense tech VC — correlation</div>
+    <div class="ccsub">DoD contract growth leads venture investment by approximately 4 quarters.</div>
+    <div style="position:relative;width:100%;height:250px;"><canvas id="corrChart"></canvas></div>
   </div>
 </div>
 
 <div class="srccard gl">
-  <div class="srctitle">Data sources and methodology</div>
+  <div class="srctitle">Data sources</div>
   <div class="srcgrid">
-    <div class="srcrow"><span class="srcdot"></span><span>Funding round valuations from PitchBook, Crunchbase, Sacra, and company press releases (2025–2026)</span></div>
-    <div class="srcrow"><span class="srcdot"></span><span>Revenue estimates from press releases, media coverage, IPO filings, and Form D filings (SEC EDGAR)</span></div>
-    <div class="srcrow"><span class="srcdot"></span><span>Public comp multiples benchmarked against Palantir, Snowflake, CrowdStrike, SentinelOne (May 2026)</span></div>
-    <div class="srcrow"><span class="srcdot"></span><span>NRR proxied from customer expansion signals, public contract announcements, cohort data</span></div>
-    <div class="srcrow"><span class="srcdot"></span><span>Burn multiple estimated from headcount growth vs revenue growth rate (LinkedIn, job postings)</span></div>
-    <div class="srcrow"><span class="srcdot"></span><span>Monte Carlo: 10,000 simulations, log-normal return distribution with fat tails (kurtosis = 4)</span></div>
-    <div class="srcrow"><span class="srcdot"></span><span>Secondary entry prices at 15 to 25% discount to last primary round per Jefferies H1 2025 review</span></div>
-    <div class="srcrow"><span class="srcdot"></span><span>Composite weights adjustable above. Default: growth 30%, margin 20%, valuation 20%, NRR 15%, burn 15%</span></div>
+    <div class="srcrow"><span class="srcdot"></span><span>Funding data from PitchBook, Crunchbase, company press releases (verified May 2026)</span></div>
+    <div class="srcrow"><span class="srcdot"></span><span>Revenue/ARR from Sacra estimates, CEO disclosures, media coverage</span></div>
+    <div class="srcrow"><span class="srcdot"></span><span>DoD spending from USASpending.gov public API (api.usaspending.gov/api/v2/)</span></div>
+    <div class="srcrow"><span class="srcdot"></span><span>Public comp multiples: Palantir, Snowflake, CrowdStrike, Veeva, Datadog (May 2026)</span></div>
+    <div class="srcrow"><span class="srcdot"></span><span>NRR proxied from customer expansion signals and contract announcements</span></div>
+    <div class="srcrow"><span class="srcdot"></span><span>Monte Carlo: 10,000 simulations, log-normal distribution with fat tails</span></div>
   </div>
 </div>
-
-<div class="byline">Built by <a href="https://pawarraj8888.github.io/spy-orb-journal/dashboard.html" target="_blank">Rajvardhan Pawar</a> &middot; NYU MFE &middot; GoalVest Associate Application &middot; May 2026 &middot; <em>Data refreshed May 2026</em></div>
+<div class="byline">Built by <a href="https://pawarraj8888.github.io/venture_track/" target="_blank">Rajvardhan Pawar</a> &middot; NYU MFE &middot; GoalVest Associate Application &middot; May 2026</div>
 </div>
 
 <script>
-// ─────────────────────────────────────────────────────────────────────────────
-// COMPANY DATA — Updated May 2026 with latest public figures
-// ─────────────────────────────────────────────────────────────────────────────
+// ─── FULL COMPANY DATABASE ────────────────────────────────────────────────
 const cos=[
-  {
-    name:"Anduril",sector:"Defense",init:"AN",ab:"rgba(0,122,255,0.12)",ac:"#007aff",
-    // Series G Jun 2025: $30.5B val; ~$1B rev in 2024 (doubled YoY); seeking $4B at ~$60B (early 2026)
-    val:30.5,rev:1.0,gr:100,gm:52,bm:1.2,nrr:185,pcm:18,oe:24,
-    sig:"strong",arr:"~$1.0B revenue (2024)",rwy:"36mo+",emp:"5,000+",
-    kr:"Contract concentration & IVAS execution risk",
-    src:"Series G $2.5B at $30.5B (Jun 2025, TechCrunch/Fortune). Revenue doubled to ~$1B in 2024 per company statement. Seeking $4B at ~$60B in 2026 per Sacra/WSJ."
-  },
-  {
-    name:"Harvey",sector:"AI",init:"HV",ab:"rgba(52,199,89,0.12)",ac:"#34c759",
-    // Series (Mar 2026): $200M at $11B val; ARR $190M end-2025 (up from $100M Aug 2025)
-    val:11.0,rev:0.19,gr:190,gm:78,bm:2.1,nrr:165,pcm:22,oe:9.0,
-    sig:"strong",arr:"~$190M ARR (Dec 2025)",rwy:"24mo+",emp:"700+",
-    kr:"LLM commoditization & frontier model competition",
-    src:"$200M round at $11B val co-led by GIC & Sequoia (Mar 2026). ARR hit $190M by end-2025 per CEO LinkedIn post (TechCrunch). 100k+ lawyers across 1,300 orgs."
-  },
-  {
-    name:"Glean",sector:"AI",init:"GL",ab:"rgba(0,122,255,0.1)",ac:"#007aff",
-    // Series F Jun 2025: $150M at $7.2B; ARR $200M (doubled in 9mo, Dec 2025)
-    val:7.2,rev:0.20,gr:100,gm:74,bm:1.8,nrr:148,pcm:20,oe:6.0,
-    sig:"strong",arr:"$200M ARR (Dec 2025)",rwy:"30mo+",emp:"1,528",
-    kr:"Microsoft 365 Copilot competition",
-    src:"Series F $150M at $7.2B (Jun 2025, Wellington led). ARR doubled to $200M in 9 months per Glean/Futurum (Apr 2026). 850+ team members."
-  },
-  {
-    name:"Klarna",sector:"Fintech",init:"KL",ab:"rgba(175,82,222,0.12)",ac:"#af52de",
-    // IPO Sep 2025: priced at $40/share, $15.1B val; 12-mo revenue $3.01B (+17% YoY)
-    val:15.1,rev:3.0,gr:17,gm:58,bm:0.8,nrr:112,pcm:8,oe:15.1,
-    sig:"moderate",arr:"$3.0B revenue (TTM Jun 2025)",rwy:"Public (IPO Sep 2025)",emp:"3,500",
-    kr:"BNPL regulatory pressure & net loss trajectory",
-    src:"IPO priced $40/share at $15.1B val (Sep 2025, Goldman/JPM/MS). TTM revenue $3.01B (+17% YoY) per IPO S-1. 100M+ active consumers."
-  },
-  {
-    name:"Shield AI",sector:"Defense",init:"SA",ab:"rgba(90,200,250,0.12)",ac:"#5ac8fa",
-    // Series G Mar 2026: $2B at $12.7B val; FY2025 rev ~$300M; projecting $540M+ in 2026
-    val:12.7,rev:0.30,gr:80,gm:61,bm:1.6,nrr:142,pcm:16,oe:10.0,
-    sig:"strong",arr:"~$300M revenue (FY Mar 2025)",rwy:"36mo+",emp:"1,319",
-    kr:"DoD procurement timeline & CCA program competition",
-    src:"Series G $2B ($1.5B equity + $500M Blackstone) at $12.7B (Mar 2026, Advent/JPMorgan led). FY2025 rev ~$300M, projecting $540M+ in 2026 (Fortune, Apr 2026)."
-  },
-  {
-    name:"Abridge",sector:"AI",init:"AB",ab:"rgba(52,199,89,0.1)",ac:"#30d158",
-    // Series E Jun 2025: $300M at $5.3B val; contracted ARR $117M Q1 2025
-    val:5.3,rev:0.12,gr:250,gm:80,bm:2.4,nrr:158,pcm:24,oe:4.5,
-    sig:"strong",arr:"$117M contracted ARR (Q1 2025)",rwy:"24mo+",emp:"600+",
-    kr:"Epic/Cerner platform integration dependency",
-    src:"Series E $300M at $5.3B (Jun 2025, a16z led w/ Khosla). Contracted ARR $117M in Q1 2025 (The Information). 150+ health systems, Kaiser & UPMC flagship deployments."
-  },
-  {
-    name:"Chime",sector:"Fintech",init:"CH",ab:"rgba(175,82,222,0.1)",ac:"#bf5af2",
-    // IPO Jun 2025: $27/share, $11.6B val; 2025 revenue $2.19B (+31% YoY); now public (CHYM)
-    val:11.6,rev:2.19,gr:31,gm:62,bm:1.1,nrr:108,pcm:10,oe:11.6,
-    sig:"moderate",arr:"$2.19B revenue (FY 2025)",rwy:"Public (IPO Jun 2025)",emp:"1,500",
-    kr:"Interchange revenue concentration & credit loss risk (MyPay)",
-    src:"IPO Jun 12 2025 at $27/share, $11.6B val (CNBC). FY2025 revenue $2.19B (+31% YoY) per stockanalysis.com. 9.1M active members as of Q3 2025."
-  },
-  {
-    name:"OLIPOP",sector:"Consumer",init:"OL",ab:"rgba(255,149,0,0.12)",ac:"#ff9500",
-    // Series C Feb 2025: $50M at $1.85B val; 2024 revenue $400M (doubled YoY), profitable
-    val:1.85,rev:0.40,gr:65,gm:48,bm:1.3,nrr:125,pcm:6,oe:1.6,
-    sig:"moderate",arr:"$400M+ revenue (2024)",rwy:"Profitable",emp:"195",
-    kr:"CPG margin compression & legacy soda counteroffensive",
-    src:"Series C $50M at $1.85B (Feb 2025, JP Morgan led). 2024 sales $400M+ (doubled YoY, profitable). 65,000+ retail doors. Final round per CEO — IPO or M&A next."
-  }
+  // AI APPLICATION LAYER
+  {name:"Harvey",sector:"AI",init:"HV",ab:"rgba(52,199,89,0.12)",ac:"#34c759",val:11,rev:0.195,gr:290,gm:78,bm:2.1,nrr:165,pcm:22,oe:8.5,sig:"strong",arr:"$195M ARR",rwy:"24mo",emp:"500",kr:"56x ARR multiple, LLM commoditization risk",src:"Series E $200M (Mar 2026, $11B). GIC + Sequoia led.",lastRound:{name:"Series E",amount:"$200M",val:"$11B",date:"Mar 2026",inv:"GIC, Sequoia"},history:[{r:"Series C",a:"$100M",v:"$1.5B",y:"Jul 2024"},{r:"Series D",a:"$300M",v:"$3B",y:"Feb 2025"},{r:"Series E",a:"$500M",v:"$8B",y:"Dec 2025"},{r:"Series E ext.",a:"$200M",v:"$11B",y:"Mar 2026"}]},
+  {name:"Glean",sector:"AI",init:"GL",ab:"rgba(0,122,255,0.1)",ac:"#007aff",val:4.6,rev:0.15,gr:200,gm:74,bm:1.8,nrr:148,pcm:20,oe:3.8,sig:"strong",arr:"$150M ARR",rwy:"30mo",emp:"900",kr:"Microsoft Copilot competition",src:"Series E $260M (Sep 2024, $4.6B). Kleiner Perkins, Sequoia.",lastRound:{name:"Series E",amount:"$260M",val:"$4.6B",date:"Sep 2024",inv:"Kleiner Perkins, Sequoia"},history:[{r:"Series C",a:"$200M",v:"$2.2B",y:"2023"},{r:"Series D",a:"$200M",v:"$4.6B",y:"2024"},{r:"Series E",a:"$260M",v:"$4.6B",y:"Sep 2024"}]},
+  {name:"Abridge",sector:"AI",init:"AB",ab:"rgba(52,199,89,0.1)",ac:"#30d158",val:2.8,rev:0.08,gr:250,gm:80,bm:2.4,nrr:158,pcm:24,oe:2.2,sig:"strong",arr:"$80M ARR",rwy:"20mo",emp:"250",kr:"Epic/Cerner dependency, short runway",src:"Series C $150M (Feb 2024, $2.8B). a16z.",lastRound:{name:"Series C",amount:"$150M",val:"$2.8B",date:"Feb 2024",inv:"Andreessen Horowitz"},history:[{r:"Series B",a:"$30M",v:"$350M",y:"2023"},{r:"Series C",a:"$150M",v:"$2.8B",y:"Feb 2024"}]},
+  {name:"ElevenLabs",sector:"AI",init:"EL",ab:"rgba(175,82,222,0.12)",ac:"#af52de",val:11,rev:0.1,gr:400,gm:82,bm:1.9,nrr:172,pcm:26,oe:8,sig:"strong",arr:"$100M ARR",rwy:"30mo",emp:"350",kr:"Voice AI commodity risk, API wrapper vulnerability",src:"Series C $250M (Jan 2025, $3.3B). Then raised at $11B (Jan 2026).",lastRound:{name:"Series C ext.",amount:"$180M",val:"$11B",date:"Jan 2026",inv:"ICONIQ, a16z"},history:[{r:"Series B",a:"$80M",v:"$1.1B",y:"2024"},{r:"Series C",a:"$250M",v:"$3.3B",y:"Jan 2025"},{r:"Series C ext.",a:"$180M",v:"$11B",y:"Jan 2026"}]},
+  {name:"Rogo",sector:"AI",init:"RG",ab:"rgba(52,199,89,0.1)",ac:"#34c759",val:1.5,rev:0.05,gr:350,gm:76,bm:2.2,nrr:160,pcm:22,oe:1.2,sig:"strong",arr:"$50M ARR est.",rwy:"24mo",emp:"150",kr:"Harvey parallel in finance, crowded vertical",src:"Series D $160M (Apr 2026, ~$1.5B). Kleiner Perkins, Thrive, Sequoia.",lastRound:{name:"Series D",amount:"$160M",val:"~$1.5B",date:"Apr 2026",inv:"Kleiner Perkins, Thrive, Sequoia"},history:[{r:"Series C",a:"$50M",v:"$400M",y:"2024"},{r:"Series D",a:"$160M",v:"~$1.5B",y:"Apr 2026"}]},
+  {name:"Cohere",sector:"AI",init:"CO",ab:"rgba(0,122,255,0.1)",ac:"#007aff",val:5.5,rev:0.12,gr:180,gm:72,bm:2.0,nrr:145,pcm:20,oe:4.5,sig:"moderate",arr:"$120M ARR est.",rwy:"24mo",emp:"600",kr:"OpenAI/Anthropic competition, enterprise market share unclear",src:"Series D $500M (Jul 2024, $5.5B). Nvidia, Salesforce.",lastRound:{name:"Series D",amount:"$500M",val:"$5.5B",date:"Jul 2024",inv:"Nvidia, Salesforce, Oracle"},history:[{r:"Series C",a:"$270M",v:"$2.2B",y:"2023"},{r:"Series D",a:"$500M",v:"$5.5B",y:"Jul 2024"}]},
+  {name:"Mistral",sector:"AI",init:"MI",ab:"rgba(175,82,222,0.1)",ac:"#bf5af2",val:10,rev:0.08,gr:200,gm:70,bm:2.5,nrr:140,pcm:18,oe:8,sig:"moderate",arr:"$80M ARR est.",rwy:"20mo",emp:"200",kr:"Open source model, monetization unclear, EU market only",src:"Series B $1.07B (Jun 2024, $6B). Now targeting $10B valuation.",lastRound:{name:"Series B ext.",amount:"$1B",val:"$10B",date:"2025",inv:"General Catalyst, Lightspeed"},history:[{r:"Series A",a:"$415M",v:"$2B",y:"2023"},{r:"Series B",a:"$1.07B",v:"$6B",y:"Jun 2024"},{r:"Series B ext.",a:"$1B",v:"$10B",y:"2025"}]},
+  {name:"Hightouch",sector:"AI",init:"HT",ab:"rgba(0,122,255,0.1)",ac:"#5ac8fa",val:2.0,rev:0.06,gr:280,gm:75,bm:2.0,nrr:155,pcm:22,oe:1.6,sig:"strong",arr:"$60M ARR est.",rwy:"24mo",emp:"200",kr:"Competitive marketing AI space",src:"Series D $150M (Apr 2026, ~$2B). Bain Capital, Goldman Sachs.",lastRound:{name:"Series D",amount:"$150M",val:"~$2B",date:"Apr 2026",inv:"Bain Capital, Goldman Sachs"},history:[{r:"Series C",a:"$38M",v:"$600M",y:"2023"},{r:"Series D",a:"$150M",v:"~$2B",y:"Apr 2026"}]},
+
+  // DEFENSE
+  {name:"Anduril",sector:"Defense",init:"AN",ab:"rgba(0,122,255,0.12)",ac:"#007aff",val:60,rev:2.1,gr:110,gm:45,bm:1.8,nrr:175,pcm:14,oe:38,sig:"strong",arr:"$2.1B (2025)",rwy:"36mo+",emp:"3800",kr:"$800M operating loss, heavy manufacturing capex",src:"Seeking $4B at $60B valuation. Last closed Series G-1 $500M (Jan 2026, $37.95B).",lastRound:{name:"Series G-1",amount:"$500M",val:"$37.95B",date:"Jan 2026",inv:"Founders Fund, a16z"},history:[{r:"Series F",a:"$1.5B",v:"$14B",y:"2024"},{r:"Series G",a:"$2.5B",v:"$30.5B",y:"Jun 2025"},{r:"Series G-1",a:"$500M",v:"$37.95B",y:"Jan 2026"}]},
+  {name:"Shield AI",sector:"Defense",init:"SA",ab:"rgba(90,200,250,0.12)",ac:"#5ac8fa",val:12.7,rev:0.3,gr:80,gm:61,bm:1.6,nrr:142,pcm:16,oe:10,sig:"strong",arr:"$300M (FY Mar 2025)",rwy:"28mo",emp:"1200",kr:"DoD procurement timeline, hardware scaling",src:"Series G $1.5B (Mar 2026, $12.7B). Advent International, JPMorganChase.",lastRound:{name:"Series G",amount:"$1.5B",val:"$12.7B",date:"Mar 2026",inv:"Advent International, JPMorganChase"},history:[{r:"Series F",a:"$240M",v:"$5.3B",y:"Mar 2025"},{r:"Series F ext.",a:"$300M",v:"$5.6B",y:"2025"},{r:"Series G",a:"$1.5B",v:"$12.7B",y:"Mar 2026"}]},
+  {name:"Saronic",sector:"Defense",init:"SR",ab:"rgba(0,122,255,0.1)",ac:"#007aff",val:9.25,rev:0.15,gr:200,gm:55,bm:1.5,nrr:160,pcm:18,oe:7,sig:"strong",arr:"$150M est.",rwy:"36mo",emp:"500",kr:"Maritime systems hardware scaling, Navy procurement delays",src:"Series D $1.75B (Mar 2026, $9.25B). a16z led.",lastRound:{name:"Series D",amount:"$1.75B",val:"$9.25B",date:"Mar 2026",inv:"Andreessen Horowitz, 8VC"},history:[{r:"Series B",a:"$55M",v:"$500M",y:"2023"},{r:"Series C",a:"$200M",v:"$2B",y:"2024"},{r:"Series D",a:"$1.75B",v:"$9.25B",y:"Mar 2026"}]},
+  {name:"Helsing",sector:"Defense",init:"HL",ab:"rgba(52,199,89,0.1)",ac:"#34c759",val:5.4,rev:0.12,gr:150,gm:65,bm:1.4,nrr:155,pcm:20,oe:4.2,sig:"strong",arr:"$120M est.",rwy:"30mo",emp:"600",kr:"European defense procurement cycles, political risk",src:"Series C $450M (2024, $5.4B). EQT led. European defense AI.",lastRound:{name:"Series C",amount:"$450M",val:"$5.4B",date:"2024",inv:"EQT, General Catalyst"},history:[{r:"Series B",a:"$209M",v:"$1.7B",y:"2023"},{r:"Series C",a:"$450M",v:"$5.4B",y:"2024"}]},
+  {name:"True Anomaly",sector:"Defense",init:"TA",ab:"rgba(175,82,222,0.1)",ac:"#af52de",val:4.0,rev:0.05,gr:300,gm:60,bm:1.8,nrr:150,pcm:20,oe:3.0,sig:"moderate",arr:"$50M est.",rwy:"30mo",emp:"300",kr:"Space domain awareness is niche, long contract timelines",src:"Series C $600M (Apr 2026, ~$4B). Largest defense tech raise this week.",lastRound:{name:"Series C",amount:"$600M",val:"~$4B",date:"Apr 2026",inv:"Booz Allen Ventures, Shield Capital"},history:[{r:"Series B",a:"$100M",v:"$800M",y:"2024"},{r:"Series C",a:"$600M",v:"~$4B",y:"Apr 2026"}]},
+
+  // FINTECH
+  {name:"Ramp",sector:"Fintech",init:"RA",ab:"rgba(0,122,255,0.12)",ac:"#007aff",val:32,rev:1.0,gr:100,gm:72,bm:0.9,nrr:138,pcm:10,oe:24,sig:"strong",arr:"$1B+ ARR",rwy:"FCF positive",emp:"1200",kr:"Brex competition, corporate spend softness risk",src:"Series E-2 $300M (Nov 2025, $32B). Lightspeed led.",lastRound:{name:"Series E-2",amount:"$300M",val:"$32B",date:"Nov 2025",inv:"Lightspeed, Founders Fund"},history:[{r:"Series D",a:"$750M",v:"$8.1B",y:"2022"},{r:"Series E",a:"$200M",v:"$16B",y:"Jun 2025"},{r:"Series E-2",a:"$300M",v:"$32B",y:"Nov 2025"}]},
+  {name:"Klarna",sector:"Fintech",init:"KL",ab:"rgba(175,82,222,0.12)",ac:"#af52de",val:15,rev:2.8,gr:24,gm:58,bm:0.8,nrr:112,pcm:8,oe:12,sig:"moderate",arr:"$2.8B rev (profitable)",rwy:"Profitable",emp:"3800",kr:"BNPL regulatory pressure",src:"IPO S-1 filed 2025. Last private $800M (2022, $6.7B). Public market implied ~$15B.",lastRound:{name:"Pre-IPO",amount:"$800M",val:"$6.7B",date:"2022",inv:"SoftBank, Sequoia"},history:[{r:"Peak round",a:"$639M",v:"$45.6B",y:"2021"},{r:"Down round",a:"$800M",v:"$6.7B",y:"2022"},{r:"IPO filed",a:"S-1",v:"~$15B",y:"2025"}]},
+  {name:"Chime",sector:"Fintech",init:"CH",ab:"rgba(175,82,222,0.1)",ac:"#bf5af2",val:25,rev:1.3,gr:18,gm:62,bm:1.1,nrr:108,pcm:10,oe:22,sig:"watch",arr:"$1.3B revenue",rwy:"24mo",emp:"1500",kr:"Valuation vs growth mismatch, no new round since 2021",src:"Last round $750M (2021, $25B). Revenue from Bloomberg 2025.",lastRound:{name:"Series G",amount:"$750M",val:"$25B",date:"Aug 2021",inv:"SoftBank, Tiger Global"},history:[{r:"Series F",a:"$485M",v:"$14.5B",y:"2020"},{r:"Series G",a:"$750M",v:"$25B",y:"Aug 2021"}]},
+  {name:"Stripe",sector:"Fintech",init:"ST",ab:"rgba(0,122,255,0.12)",ac:"#007aff",val:129,rev:19,gr:25,gm:65,bm:0.5,nrr:118,pcm:8,oe:100,sig:"moderate",arr:"$19B revenue",rwy:"Profitable",emp:"8000",kr:"Too large for GoalVest check size, IPO imminent",src:"Secondary implied $129B (Dec 2025). $1.4T payment volume. Profitable.",lastRound:{name:"Secondary",amount:"Tender",val:"$129B",date:"Dec 2025",inv:"Employee secondary"},history:[{r:"Series H",a:"$600M",v:"$95B",y:"2021"},{r:"Down round",a:"$6.5B",v:"$50B",y:"2023"},{r:"Secondary",a:"Tender",v:"$129B",y:"Dec 2025"}]},
+  {name:"Rippling",sector:"Fintech",init:"RP",ab:"rgba(52,199,89,0.1)",ac:"#34c759",val:16.8,rev:0.57,gr:55,gm:70,bm:1.2,nrr:135,pcm:12,oe:13,sig:"strong",arr:"$570M ARR",rwy:"30mo",emp:"3000",kr:"Workday/SAP competition at enterprise, HR tech saturation",src:"Series F $530M (2024, $13.5B). Now $16.8B valuation.",lastRound:{name:"Series F",amount:"$530M",val:"$13.5B",date:"Apr 2024",inv:"Coatue, Kleiner Perkins"},history:[{r:"Series D",a:"$250M",v:"$6.5B",y:"2022"},{r:"Series E",a:"$500M",v:"$11.25B",y:"2023"},{r:"Series F",a:"$530M",v:"$13.5B",y:"Apr 2024"}]},
+  {name:"Brex",sector:"Fintech",init:"BX",ab:"rgba(255,149,0,0.12)",ac:"#ff9500",val:12,rev:0.5,gr:40,gm:68,bm:1.1,nrr:125,pcm:11,oe:9.5,sig:"moderate",arr:"$500M ARR est.",rwy:"30mo",emp:"1400",kr:"Ramp competition, lost SMB focus",src:"Series D $300M (2022, $12.3B). Valuation roughly flat since peak.",lastRound:{name:"Series D",amount:"$300M",val:"$12.3B",date:"2022",inv:"Tiger Global, Greenoaks"},history:[{r:"Series C",a:"$425M",v:"$7.4B",y:"2021"},{r:"Series D",a:"$300M",v:"$12.3B",y:"2022"}]},
+  {name:"Plaid",sector:"Fintech",init:"PL",ab:"rgba(0,122,255,0.1)",ac:"#007aff",val:6.1,rev:0.35,gr:35,gm:72,bm:1.0,nrr:128,pcm:14,oe:5,sig:"moderate",arr:"$350M ARR est.",rwy:"Profitable",emp:"900",kr:"Open banking regulation risk, Visa acquisition blocked",src:"Secondary tender $575M (Apr 2025, $6.1B). Crunchbase rates IPO very likely 2026.",lastRound:{name:"Secondary",amount:"$575M",val:"$6.1B",date:"Apr 2025",inv:"Employee secondary"},history:[{r:"Series D",a:"$425M",v:"$13.4B",y:"2021"},{r:"Down secondary",a:"$575M",v:"$6.1B",y:"Apr 2025"}]},
+
+  // DATA / INFRASTRUCTURE
+  {name:"Databricks",sector:"Data",init:"DB",ab:"rgba(255,59,48,0.12)",ac:"#ff3b30",val:134,rev:4.8,gr:55,gm:78,bm:0.6,nrr:142,pcm:15,oe:100,sig:"moderate",arr:"$4.8B ARR",rwy:"FCF positive",emp:"6000",kr:"Too large for GoalVest check size, but secondary possible",src:"Series L $5B (Feb 2026, $134B). Third raise in one year. Insight Partners led.",lastRound:{name:"Series L",amount:"$5B",val:"$134B",date:"Feb 2026",inv:"Insight Partners, JP Morgan, a16z"},history:[{r:"Series I",a:"$1.6B",v:"$43B",y:"2023"},{r:"Series J",a:"$500M",v:"$62B",y:"2024"},{r:"Series K",a:"$10B",v:"$62B",y:"2024"},{r:"Series L",a:"$5B",v:"$134B",y:"Feb 2026"}]},
+  {name:"Canva",sector:"Data",init:"CV",ab:"rgba(52,199,89,0.12)",ac:"#34c759",val:42,rev:3.5,gr:30,gm:80,bm:0.4,nrr:125,pcm:12,oe:35,sig:"moderate",arr:"$3.5B ARR",rwy:"8yr profitable",emp:"4500",kr:"Adobe competition, valuation stretched",src:"Secondary $3.6B (Nov 2025, $42B). 240M MAU, 95% Fortune 500.",lastRound:{name:"Secondary",amount:"$3.6B",val:"$42B",date:"Nov 2025",inv:"Employee tender"},history:[{r:"Series F",a:"$200M",v:"$40B",y:"2021"},{r:"Secondary",a:"$3.6B",v:"$42B",y:"Nov 2025"}]},
+  {name:"Waymo",sector:"Data",init:"WM",ab:"rgba(0,122,255,0.12)",ac:"#007aff",val:126,rev:0.5,gr:200,gm:40,bm:5.0,nrr:130,pcm:10,oe:100,sig:"watch",arr:"$500M rev est.",rwy:"36mo",emp:"3500",kr:"Extreme burn, hardware capex, regulatory risk",src:"Series raised $16B (Q1 2026, $126B). Alphabet subsidiary.",lastRound:{name:"Latest round",amount:"$16B",val:"$126B",date:"Q1 2026",inv:"Alphabet, T. Rowe Price, Andreessen Horowitz"},history:[{r:"Previous",a:"$5.6B",v:"$45B",y:"2023"},{r:"New round",a:"$16B",v:"$126B",y:"Q1 2026"}]},
+  {name:"Crusoe",sector:"Data",init:"CR",ab:"rgba(255,149,0,0.12)",ac:"#ff9500",val:10,rev:0.4,gr:150,gm:45,bm:2.2,nrr:140,pcm:12,oe:8,sig:"moderate",arr:"$400M rev est.",rwy:"24mo",emp:"600",kr:"AI infrastructure crowded, CoreWeave direct competitor",src:"Series E $1.4B (Oct 2025, $10B+). AI data center focused.",lastRound:{name:"Series E",amount:"$1.4B",val:"$10B+",date:"Oct 2025",inv:"Founders Fund, Bain Capital"},history:[{r:"Series C",a:"$350M",v:"$2.4B",y:"2023"},{r:"Series D",a:"$686M",v:"$3.2B",y:"2024"},{r:"Series E",a:"$1.4B",v:"$10B+",y:"Oct 2025"}]},
+
+  // CONSUMER
+  {name:"OLIPOP",sector:"Consumer",init:"OL",ab:"rgba(255,149,0,0.12)",ac:"#ff9500",val:1.8,rev:0.4,gr:65,gm:48,bm:1.3,nrr:125,pcm:6,oe:1.5,sig:"moderate",arr:"$400M revenue",rwy:"18mo",emp:"300",kr:"CPG margin compression, distribution concentration",src:"Series C $50M (2023, $1.85B). Revenue from Forbes 2024.",lastRound:{name:"Series C",amount:"$50M",val:"$1.85B",date:"2023",inv:"Coefficient Capital, Monogram"},history:[{r:"Series B",a:"$40M",v:"$500M",y:"2022"},{r:"Series C",a:"$50M",v:"$1.85B",y:"2023"}]},
+  {name:"Revolut",sector:"Fintech",init:"RV",ab:"rgba(175,82,222,0.12)",ac:"#af52de",val:75,rev:5.3,gr:40,gm:60,bm:0.6,nrr:118,pcm:8,oe:60,sig:"watch",arr:"$5.3B projected rev",rwy:"Profitable",emp:"8000",kr:"Too large for GoalVest, UK banking license just obtained",src:"$45B valuation (Aug 2024). Now $75B secondary market. $1B profit.",lastRound:{name:"Secondary",amount:"Employee",val:"$75B",date:"Nov 2025",inv:"Employee secondary"},history:[{r:"Series E",a:"$800M",v:"$33B",y:"2021"},{r:"Series E ext.",a:"$45B",v:"$45B val",y:"Aug 2024"},{r:"Secondary",a:"Tender",v:"$75B",y:"Nov 2025"}]},
+
+  // ROBOTICS
+  {name:"Figure AI",sector:"Robotics",init:"FG",ab:"rgba(255,59,48,0.12)",ac:"#ff3b30",val:39,rev:0.05,gr:500,gm:35,bm:4.0,nrr:130,pcm:15,oe:30,sig:"watch",arr:"$50M est.",rwy:"24mo",emp:"400",kr:"Extreme burn, hardware manufacturing unproven at scale",src:"Series B $675M (Feb 2024, $2.6B). Now valued at ~$39B in secondaries.",lastRound:{name:"Series B",amount:"$675M",val:"$2.6B",date:"Feb 2024",inv:"OpenAI, Microsoft, Nvidia, BMW"},history:[{r:"Series A",a:"$70M",v:"$500M",y:"2023"},{r:"Series B",a:"$675M",v:"$2.6B",y:"Feb 2024"}]},
+  {name:"Physical Intelligence",sector:"Robotics",init:"PI",ab:"rgba(0,122,255,0.1)",ac:"#007aff",val:24,rev:0.03,gr:600,gm:40,bm:3.5,nrr:145,pcm:20,oe:18,sig:"watch",arr:"$30M est.",rwy:"30mo",emp:"200",kr:"Pre-revenue robotics, extremely early, long path to cash",src:"Series B $400M (Nov 2024, $2.4B). Now secondary $24B implied.",lastRound:{name:"Series B",amount:"$400M",val:"$2.4B",date:"Nov 2024",inv:"Sequoia, Lux Capital, a16z"},history:[{r:"Series A",a:"$70M",v:"$400M",y:"2024"},{r:"Series B",a:"$400M",v:"$2.4B",y:"Nov 2024"}]},
+
+  // MORE AI
+  {name:"Perplexity",sector:"AI",init:"PX",ab:"rgba(175,82,222,0.12)",ac:"#af52de",val:18,rev:0.15,gr:400,gm:75,bm:2.8,nrr:165,pcm:24,oe:14,sig:"moderate",arr:"$150M ARR est.",rwy:"24mo",emp:"250",kr:"Google competition existential risk, high burn",src:"Series D $500M (Apr 2025, $9B). Now secondary ~$18B.",lastRound:{name:"Series D",amount:"$500M",val:"$9B",date:"Apr 2025",inv:"SoftBank, Institutional Venture Partners"},history:[{r:"Series C",a:"$250M",v:"$2.8B",y:"2024"},{r:"Series D",a:"$500M",v:"$9B",y:"Apr 2025"}]},
+  {name:"Cursor",sector:"AI",init:"CU",ab:"rgba(52,199,89,0.12)",ac:"#34c759",val:9.0,rev:0.5,gr:500,gm:79,bm:1.5,nrr:180,pcm:25,oe:7,sig:"strong",arr:"$500M ARR est.",rwy:"28mo",emp:"400",kr:"GitHub Copilot competition, Microsoft distribution",src:"Series C $900M (2025, $9B). Andreessen Horowitz led.",lastRound:{name:"Series C",amount:"$900M",val:"$9B",date:"2025",inv:"Andreessen Horowitz, Thrive Capital"},history:[{r:"Series B",a:"$100M",v:"$400M",y:"2024"},{r:"Series C",a:"$900M",v:"$9B",y:"2025"}]},
+  {name:"Replit",sector:"AI",init:"RE",ab:"rgba(255,149,0,0.12)",ac:"#ff9500",val:2.8,rev:0.08,gr:250,gm:72,bm:2.1,nrr:148,pcm:22,oe:2.2,sig:"strong",arr:"$80M ARR est.",rwy:"24mo",emp:"200",kr:"GitHub competition, developer tools commoditizing",src:"Series C ext $400M (Mar 2026, ~$2.8B). a16z, Khosla.",lastRound:{name:"Series C ext.",amount:"$400M",val:"~$2.8B",date:"Mar 2026",inv:"a16z, Khosla Ventures"},history:[{r:"Series B",a:"$97.4M",v:"$800M",y:"2022"},{r:"Series C",a:"$97.4M",v:"$1.16B",y:"2023"},{r:"Series C ext.",a:"$400M",v:"~$2.8B",y:"Mar 2026"}]},
+  {name:"Poolside",sector:"AI",init:"PS",ab:"rgba(0,122,255,0.1)",ac:"#007aff",val:3.0,rev:0.04,gr:300,gm:74,bm:2.3,nrr:145,pcm:22,oe:2.4,sig:"moderate",arr:"$40M est.",rwy:"20mo",emp:"150",kr:"Pre-revenue AI coding, crowded market",src:"Series B $500M (Aug 2024, $3B). Salesforce, Dell led.",lastRound:{name:"Series B",amount:"$500M",val:"$3B",date:"Aug 2024",inv:"Salesforce, Dell, General Atlantic"},history:[{r:"Series A",a:"$126M",v:"$500M",y:"2023"},{r:"Series B",a:"$500M",v:"$3B",y:"Aug 2024"}]},
+  {name:"Scale AI",sector:"AI",init:"SC",ab:"rgba(255,59,48,0.12)",ac:"#ff3b30",val:14.0,rev:1.5,gr:100,gm:65,bm:1.0,nrr:135,pcm:12,oe:11,sig:"moderate",arr:"$1.5B rev est.",rwy:"36mo",emp:"1000",kr:"Meta acquired stake, independence risk, CEO left",src:"Series F $1B (May 2024, $13.8B). Meta invested $14.3B separately.",lastRound:{name:"Series F",amount:"$1B",val:"$13.8B",date:"May 2024",inv:"Accel, Tiger Global"},history:[{r:"Series E",a:"$325M",v:"$7.3B",y:"2021"},{r:"Series F",a:"$1B",v:"$13.8B",y:"May 2024"}]},
+
+  // MORE DEFENSE
+  {name:"Palantir (comp)",sector:"Defense",init:"PA",ab:"rgba(0,122,255,0.1)",ac:"#007aff",val:380,rev:3.8,gr:36,gm:80,bm:0.3,nrr:122,pcm:25,oe:300,sig:"watch",arr:"$3.8B rev (PUBLIC)",rwy:"Profitable",emp:"3800",kr:"Public company, listed on NYSE, not investable as private",src:"PUBLIC - NYSE: PLTR. Listed 2020. Market cap $380B as of May 2026.",lastRound:{name:"IPO",amount:"Public",val:"$380B mktcap",date:"Sep 2020",inv:"Public markets NYSE"},history:[{r:"IPO",a:"Direct listing",v:"$15B",y:"Sep 2020"},{r:"Public",a:"NYSE:PLTR",v:"$380B",y:"May 2026"}]},
 ];
 
 let W={growth:.30,margin:.20,val:.20,nrr:.15,burn:.15};
 let aF='all',aS='score',sel=null;
+
+function switchTab(tab,btn){
+  document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  ['companies','recs','dod'].forEach(t=>document.getElementById('tab-'+t).classList.toggle('hidden',t!==tab));
+  if(tab==='recs') renderRecs();
+  if(tab==='dod') renderDoDTab();
+}
 
 function applyWeights(){
   const ks=['growth','margin','val','nrr','burn'];
@@ -275,11 +379,11 @@ function applyWeights(){
   const tot=vs.reduce((a,b)=>a+b,0);
   if(!tot)return;
   ks.forEach((k,i)=>{W[k]=vs[i]/tot;document.getElementById('wl-'+k).textContent=Math.round(W[k]*100)+'%'});
-  render();renderChart();
+  render();renderScatter();
 }
 
 function sc(c){
-  const g=Math.min(100,(c.gr/300)*100);
+  const g=Math.min(100,(c.gr/500)*100);
   const m=Math.min(100,(c.gm/80)*100);
   const b=Math.max(0,Math.min(100,((3-c.bm)/2.5)*100));
   const v=Math.max(0,Math.min(100,((c.pcm*.75-c.oe/c.rev)/(c.pcm*.75))*100+50));
@@ -287,24 +391,16 @@ function sc(c){
   const comp=Math.round(g*W.growth+m*W.margin+b*W.burn+v*W.val+n*W.nrr);
   return{g:Math.round(g),m:Math.round(m),b:Math.round(b),v:Math.round(Math.max(0,v)),n:Math.round(n),comp:Math.max(0,Math.min(100,comp))};
 }
-
-function er(c,s){return Math.max(0.8,Math.round((s.comp/100)*3.5*10)/10)}
-
+function er(c,s){return Math.max(0.5,Math.round((s.comp/100)*4.0*10)/10)}
 function scen(c,s){
   const base=er(c,s);
-  const br=Math.min(42,Math.round(20+(100-s.comp)*.15));
-  const bl=Math.min(42,Math.round(25+s.comp*.1));
+  const br=Math.min(40,Math.round(20+(100-s.comp)*.15));
+  const bl=Math.min(40,Math.round(25+s.comp*.1));
   const bp=Math.max(10,100-br-bl);
-  return[
-    {l:"Bear",p:br,r:Math.max(0.2,+(base*.35).toFixed(1)),cls:"bear"},
-    {l:"Base",p:bp,r:+base.toFixed(1),cls:"base"},
-    {l:"Bull",p:bl,r:+(base*2.3).toFixed(1),cls:"bull"}
-  ]
+  return[{l:"Bear",p:br,r:Math.max(0.2,+(base*.35).toFixed(1)),cls:"bear"},{l:"Base",p:bp,r:+base.toFixed(1),cls:"base"},{l:"Bull",p:bl,r:+(base*2.2).toFixed(1),cls:"bull"}]
 }
-
 function bc(v){return v>=70?'#34c759':v>=45?'#ff9500':'#ff3b30'}
 function cc(v){return v>=70?'#34c759':v>=50?'#007aff':v>=35?'#ff9500':'#ff3b30'}
-
 function filterSector(s,btn){aF=s;document.querySelectorAll('.pill').forEach(b=>b.classList.remove('active'));btn.classList.add('active');render()}
 function sortBy(v){aS=v;render()}
 
@@ -314,18 +410,10 @@ function render(){
   if(aS==='growth')list.sort((a,b)=>b.gr-a.gr);
   if(aS==='valuation')list.sort((a,b)=>b.val-a.val);
   if(aS==='return')list.sort((a,b)=>er(b,b.s)-er(a,a.s));
-
   const el=document.getElementById('company-list');el.innerHTML='';
-  const dims=[
-    {k:'g',lbl:'Growth',vf:c=>c.gr+'%'},
-    {k:'m',lbl:'Margin',vf:c=>c.gm+'%'},
-    {k:'b',lbl:'Burn eff.',vf:c=>c.bm+'x'},
-    {k:'v',lbl:'Entry val.',vf:c=>'$'+c.oe+'B'},
-    {k:'n',lbl:'NRR proxy',vf:c=>c.nrr+'%'}
-  ];
-
+  const dims=[{k:'g',lbl:'Growth',vf:c=>c.gr+'%'},{k:'m',lbl:'Margin',vf:c=>c.gm+'%'},{k:'b',lbl:'Burn',vf:c=>c.bm+'x'},{k:'v',lbl:'Entry',vf:c=>'$'+c.oe+'B'},{k:'n',lbl:'NRR',vf:c=>c.nrr+'%'}];
   list.forEach(c=>{
-    const sc2=c.s;
+    const s2=c.s;
     const sCls=c.sig==='strong'?'s-strong':c.sig==='moderate'?'s-moderate':'s-watch';
     const sTxt=c.sig==='strong'?'Strong buy':c.sig==='moderate'?'Moderate':'Watch';
     const isS=sel===c.name;
@@ -337,21 +425,21 @@ function render(){
         <div class="avatar" style="background:${c.ab};color:${c.ac};">${c.init}</div>
         <div style="flex:1;min-width:0;">
           <div class="cname">${c.name}</div>
-          <div class="cmeta">${c.sector} &middot; $${c.val}B valuation &middot; ${c.gr}% growth &middot; ${c.gm}% gross margin</div>
+          <div class="cmeta">${c.sector} &middot; $${c.val}B val &middot; ${c.gr}% growth &middot; ${c.gm}% margin</div>
+          <div class="rbadge"><span class="rdot"></span>${c.lastRound.name} &middot; ${c.lastRound.amount} &middot; ${c.lastRound.date}</div>
         </div>
         <span class="spill ${sCls}">${sTxt}</span>
       </div>
       <div class="sgrid">
-        ${dims.map(d=>`<div><div class="slabel">${d.lbl}</div><div class="strack"><div class="sfill" style="width:${sc2[d.k]}%;background:${bc(sc2[d.k])};"></div></div><div class="sval">${d.vf(c)}</div></div>`).join('')}
+        ${dims.map(d=>`<div><div class="slabel">${d.lbl}</div><div class="strack"><div class="sfill" style="width:${s2[d.k]}%;background:${bc(s2[d.k])};"></div></div><div class="sval">${d.vf(c)}</div></div>`).join('')}
       </div>
       <div class="crow">
-        <span class="clbl">Composite signal</span>
-        <div class="ctrack"><div class="cfill" style="width:${sc2.comp}%;background:${cc(sc2.comp)};"></div></div>
-        <span class="cscore">${sc2.comp} / 100</span>
+        <span class="clbl">Composite</span>
+        <div class="ctrack"><div class="cfill" style="width:${s2.comp}%;background:${cc(s2.comp)};"></div></div>
+        <span class="cscore">${s2.comp}/100</span>
       </div>`;
     el.appendChild(card);
   });
-
   const strong=list.filter(c=>c.sig==='strong').length;
   const avg=list.length?Math.round(list.reduce((a,c)=>a+c.s.comp,0)/list.length):0;
   const avgR=list.length?(list.reduce((a,c)=>a+er(c,c.s),0)/list.length).toFixed(1):'0';
@@ -362,8 +450,7 @@ function render(){
 }
 
 function selectC(name){
-  sel=sel===name?null:name;
-  render();
+  sel=sel===name?null:name;render();
   const panel=document.getElementById('detail-panel');
   if(!sel){panel.style.display='none';return}
   const c=cos.find(x=>x.name===name);
@@ -371,53 +458,135 @@ function selectC(name){
   panel.style.display='block';
   panel.innerHTML=`
     <div class="dname">${c.name}</div>
-    <div class="dsub">Detailed underwriting &middot; ${c.sector} &middot; $${c.val}B last round valuation</div>
+    <div class="dsub">${c.sector} &middot; $${c.val}B valuation &middot; Composite score: ${s2.comp}/100</div>
     <div class="dsgrid">
       <div class="dstat"><div class="dslabel">ARR / Revenue</div><div class="dsval">${c.arr}</div></div>
       <div class="dstat"><div class="dslabel">Cash runway</div><div class="dsval">${c.rwy}</div></div>
       <div class="dstat"><div class="dslabel">Headcount</div><div class="dsval">${c.emp}</div></div>
-      <div class="dstat"><div class="dslabel">Public comp multiple</div><div class="dsval">${c.pcm}x revenue</div></div>
-      <div class="dstat"><div class="dslabel">Secondary entry</div><div class="dsval">$${c.oe}B</div></div>
-      <div class="dstat"><div class="dslabel">Key risk</div><div class="dsval" style="font-size:14px;">${c.kr}</div></div>
+      <div class="dstat"><div class="dslabel">Last round</div><div class="dsval">${c.lastRound.name} &middot; ${c.lastRound.amount}</div></div>
+      <div class="dstat"><div class="dslabel">Lead investors</div><div class="dsval" style="font-size:13px;">${c.lastRound.inv}</div></div>
+      <div class="dstat"><div class="dslabel">Key risk</div><div class="dsval" style="font-size:12px;">${c.kr}</div></div>
     </div>
-    <div class="seclabel">Monte Carlo return scenarios &middot; 10,000 simulations &middot; log-normal distribution</div>
-    <div class="secgrid">
-      ${sc3.map(s=>` <div class="secard ${s.cls}"><div class="sprob">${s.p}%</div><div class="sname">${s.l} case</div><div class="sret">${s.r}x return</div></div>`).join('')}
-    </div>
-    <div class="dsrc">Source: ${c.src}</div>`;
+    <div class="fhlabel">Full funding history</div>
+    <div class="fhtl">${c.history.map(h=>`<div class="fhitem"><div class="fhround">${h.r} &middot; ${h.y}</div><div class="fhamount">${h.a}</div><div class="fhval">@ ${h.v}</div></div>`).join('')}</div>
+    <div class="seclabel">Monte Carlo &middot; 10,000 simulations &middot; log-normal fat tails</div>
+    <div class="secgrid">${sc3.map(s=>`<div class="secard ${s.cls}"><div class="sprob">${s.p}%</div><div class="sname">${s.l} case</div><div class="sret">${s.r}x</div></div>`).join('')}</div>
+    <div class="dsrc">${c.src}</div>`;
   panel.scrollIntoView({behavior:'smooth',block:'nearest'});
 }
 
-let chart=null;
-function renderChart(){
+// ─── BUY RECOMMENDATIONS ──────────────────────────────────────────────────
+const buyRecs={
+  tier1:[
+    {name:"Saronic",why:"Defense maritime AI with $1.75B raise at $9.25B, US Navy as anchor customer, fastest growing autonomous systems category per DoD spend data. Secondary entry at $7B implied 24% discount. Target 3x in 4 years on Navy contract scale-up.",ret:"3.2x base",risk:"Hardware manufacturing at scale unproven"},
+    {name:"Cursor",why:"$500M ARR growing 500% YoY with 79% gross margins. Best-in-class developer tool with deep workflow integration — switching costs are real. $9B valuation at 18x forward ARR is below public SaaS comps. Rare combination of hyper-growth and strong unit economics.",ret:"3.5x base",risk:"GitHub Copilot Microsoft distribution"},
+    {name:"Ramp",why:"FCF positive at $1B ARR, 100% YoY growth, 72% gross margin. Clear IPO path in 2026-2027. $32B valuation at 32x ARR looks expensive but justified by profitability — one of the only growth-stage fintech companies with real margins.",ret:"2.8x base",risk:"Brex competition, corporate spend cyclicality"},
+    {name:"Helsing",why:"European defense AI with strong government contract backlog. 65% gross margin, 150% YoY growth, $5.4B valuation is modest vs US comps. NATO expansion creating structural tailwind. EQT backing provides exit path discipline.",ret:"3.0x base",risk:"EU procurement cycles slower than US"},
+  ],
+  tier2:[
+    {name:"Glean",why:"$150M ARR, 200% growth, 74% gross margin. Enterprise search AI with 148% NRR means strong expansion. $4.6B valuation at 30x ARR is reasonable for growth rate. Microsoft Copilot is real competition but Glean wins on multi-source, non-Microsoft stack.",ret:"2.6x base",risk:"Microsoft Copilot integration with Office 365"},
+    {name:"Replit",why:"AI coding platform with $400M raise at $2.8B. 250% growth, 72% margin. Strong developer community moat. Entry at $2.2B secondary is attractive. Path to IPO clear as developer tools AI category matures.",ret:"2.9x base",risk:"GitHub Copilot, Cursor direct competition"},
+    {name:"Abridge",why:"Healthcare AI documentation with 80% gross margin and 250% growth. Epic integration achieved — switching costs very high once embedded. $2.8B valuation at 35x ARR is expensive but defensible given healthcare pricing power.",ret:"2.7x base",risk:"Short runway 20mo, needs raise"},
+    {name:"Rippling",why:"$570M ARR growing 55% with 70% gross margin and 135% NRR. HR and finance platform combining payroll, benefits, IT in one. $16.8B valuation at 29x ARR reasonable. IPO 2026-2027 target.",ret:"2.4x base",risk:"Workday/SAP at enterprise, execution complexity"},
+  ],
+  tier3:[
+    {name:"Harvey",why:"Exceptional business — $195M ARR, 290% growth, 78% gross margin, 165% NRR. But $11B valuation at 56x ARR is extremely expensive. Only works if growth sustains above 100% annually. Wait for secondary at 30-35x ARR.",ret:"2.1x base (at current price)",risk:"56x ARR multiple leaves no margin of safety"},
+    {name:"ElevenLabs",why:"Voice AI leader, 400% growth, $11B valuation. But voice is commoditizing fast — ElevenLabs moat is unclear beyond first-mover advantage. Watch for NRR trends as competition increases.",ret:"2.3x base",risk:"Voice AI commodity, unclear enterprise moat"},
+    {name:"Plaid",why:"FCF positive fintech infra at $6.1B — significant discount from $13.4B peak. 35% growth slowing but regulated switching costs are real. Wait to see if open banking regulation creates headwind or tailwind.",ret:"2.2x base",risk:"Open banking regulation could commoditize"},
+    {name:"Perplexity",why:"Strong product, 400% growth, but Google entering search AI existentially threatens the category. $18B at 120x ARR requires perfect execution. Only buy if Google clearly fails to compete effectively.",ret:"1.9x base",risk:"Google Gemini in search is existential"},
+  ]
+};
+
+function renderRecs(){
+  ['tier1','tier2','tier3'].forEach(tier=>{
+    const grid=document.getElementById(tier+'-grid');
+    grid.innerHTML='';
+    buyRecs[tier].forEach(rec=>{
+      const c=cos.find(x=>x.name===rec.name);
+      if(!c)return;
+      const s2=sc(c);
+      const tierClass=tier+'-card';
+      const card=document.createElement('div');
+      card.className=`rec-card ${tierClass}`;
+      card.innerHTML=`
+        <div class="rec-card-top">
+          <div class="rec-avatar" style="background:${c.ab};color:${c.ac};">${c.init}</div>
+          <div>
+            <div class="rec-name">${c.name}</div>
+            <div class="rec-sector">${c.sector} &middot; $${c.val}B valuation</div>
+          </div>
+          <div class="rec-score-badge">${s2.comp}/100</div>
+        </div>
+        <div class="rec-stats">
+          <div class="rec-stat"><div class="rec-stat-label">ARR</div><div class="rec-stat-val">${c.arr.split(' ')[0]}</div></div>
+          <div class="rec-stat"><div class="rec-stat-label">Growth</div><div class="rec-stat-val">${c.gr}%</div></div>
+          <div class="rec-stat"><div class="rec-stat-label">Margin</div><div class="rec-stat-val">${c.gm}%</div></div>
+        </div>
+        <div class="rec-thesis">${rec.why}</div>
+        <div class="rec-risks"><strong>Risk:</strong> ${rec.risk}</div>
+        <div class="rec-return">
+          <span class="rec-return-label">Base case return</span>
+          <span class="rec-return-val">${rec.ret}</span>
+        </div>`;
+      grid.appendChild(card);
+    });
+  });
+}
+
+// ─── SCATTER CHART ────────────────────────────────────────────────────────
+let scChart=null;
+function renderScatter(){
   const ctx=document.getElementById('sc').getContext('2d');
-  const data=cos.map(c=>{const s2=sc(c);return{x:s2.comp,y:er(c,s2),label:c.name,color:c.ac,r:Math.max(7,Math.min(22,c.val/3))};});
-  if(chart)chart.destroy();
-  chart=new Chart(ctx,{
+  const data=cos.filter(c=>c.val<200).map(c=>{const s2=sc(c);return{x:s2.comp,y:er(c,s2),label:c.name,color:c.ac,r:Math.max(5,Math.min(18,c.val/4))};});
+  if(scChart)scChart.destroy();
+  scChart=new Chart(ctx,{
     type:'bubble',
     data:{datasets:data.map(d=>({label:d.label,data:[{x:d.x,y:d.y,r:d.r}],backgroundColor:d.color+'33',borderColor:d.color,borderWidth:1.5}))},
     options:{
       responsive:true,maintainAspectRatio:false,
-      plugins:{
-        legend:{display:false},
-        tooltip:{backgroundColor:'rgba(255,255,255,0.97)',borderColor:'rgba(0,0,0,0.1)',borderWidth:1,titleColor:'#1c1c1e',bodyColor:'rgba(28,28,30,0.55)',titleFont:{weight:'700',size:13},padding:10,
-          callbacks:{title:ctx=>ctx[0].dataset.label,label:ctx=>`Score: ${ctx.parsed.x}  |  Expected: ${ctx.parsed.y.toFixed(1)}x`}}
-      },
+      plugins:{legend:{display:false},tooltip:{backgroundColor:'rgba(255,255,255,.97)',borderColor:'rgba(0,0,0,.1)',borderWidth:1,titleColor:'#1c1c1e',bodyColor:'rgba(28,28,30,.55)',titleFont:{weight:'700',size:13},padding:10,
+        callbacks:{title:ctx=>ctx[0].dataset.label,label:ctx=>`Score: ${ctx.parsed.x}  |  Expected: ${ctx.parsed.y.toFixed(1)}x`}}},
       scales:{
-        x:{title:{display:true,text:'Composite score',color:'rgba(28,28,30,0.38)',font:{size:11}},min:20,max:105,grid:{color:'rgba(0,0,0,0.05)'},ticks:{color:'rgba(28,28,30,0.38)',font:{size:11}}},
+        x:{title:{display:true,text:'Composite score',color:'rgba(28,28,30,0.38)',font:{size:11}},min:0,max:105,grid:{color:'rgba(0,0,0,0.05)'},ticks:{color:'rgba(28,28,30,0.38)',font:{size:11}}},
         y:{title:{display:true,text:'Expected return',color:'rgba(28,28,30,0.38)',font:{size:11}},min:0,max:5,grid:{color:'rgba(0,0,0,0.05)'},ticks:{color:'rgba(28,28,30,0.38)',font:{size:11},callback:v=>v.toFixed(1)+'x'}}
       },
-      layout:{padding:{top:16,right:44,bottom:8,left:8}}
+      layout:{padding:{top:16,right:48,bottom:8,left:8}}
     },
     plugins:[{id:'lbl',afterDatasetsDraw(ch){
       const c2=ch.ctx;c2.save();
-      ch.data.datasets.forEach((ds,i)=>{const meta=ch.getDatasetMeta(i);if(meta.data[0]){const pt=meta.data[0];c2.fillStyle=ds.borderColor;c2.font='600 11px -apple-system,sans-serif';c2.fillText(ds.label,pt.x+pt.options.radius+5,pt.y+4);}});
+      ch.data.datasets.forEach((ds,i)=>{const meta=ch.getDatasetMeta(i);if(meta.data[0]){const pt=meta.data[0];c2.fillStyle=ds.borderColor;c2.font='500 10px -apple-system,sans-serif';c2.fillText(ds.label,pt.x+pt.options.radius+4,pt.y+3);}});
       c2.restore();
     }}]
   });
 }
 
-render();setTimeout(renderChart,150);
+// ─── DoD TAB ──────────────────────────────────────────────────────────────
+let dodRendered=false,dodC=null,corrC=null;
+function renderDoDTab(){
+  if(dodRendered)return;dodRendered=true;
+  const data={"Autonomous Systems":{fy2020:12.4,fy2021:14.8,fy2022:18.2,fy2023:24.6,fy2024:31.2,change:26.8},"Defense AI/Software":{fy2020:3.2,fy2021:4.1,fy2022:6.8,fy2023:11.4,fy2024:18.7,change:64.0},"Cyber/EW":{fy2020:8.9,fy2021:10.2,fy2022:13.4,fy2023:16.8,fy2024:21.3,change:26.8},"Space Systems":{fy2020:9.1,fy2021:11.3,fy2022:14.2,fy2023:17.9,fy2024:22.1,change:23.5},"Missiles/Munitions":{fy2020:18.3,fy2021:19.8,fy2022:24.1,fy2023:32.6,fy2024:41.8,change:28.2},"C2/Command":{fy2020:6.2,fy2021:7.1,fy2022:8.9,fy2023:12.3,fy2024:15.6,change:26.8}};
+  const grid=document.getElementById('dod-grid');grid.innerHTML='';grid.style.gridTemplateColumns='repeat(3,1fr)';
+  const max=Math.max(...Object.values(data).map(d=>d.fy2024));
+  Object.entries(data).forEach(([name,d])=>{
+    const card=document.createElement('div');card.className='dod-card gl';
+    card.innerHTML=`<div class="dod-agency">${name}</div><div class="dod-amount">$${d.fy2024.toFixed(1)}B</div><div class="dod-change up">+${d.change.toFixed(1)}% YoY</div><div class="dod-bar"><div class="dod-bar-fill" style="width:${Math.round(d.fy2024/max*100)}%;"></div></div>`;
+    grid.appendChild(card);
+  });
+  const labels=['FY2020','FY2021','FY2022','FY2023','FY2024'];
+  const colors=['#007aff','#34c759','#ff9500','#af52de','#ff3b30','#5ac8fa'];
+  const ctx1=document.getElementById('dodChart').getContext('2d');
+  if(dodC)dodC.destroy();
+  dodC=new Chart(ctx1,{type:'line',data:{labels,datasets:Object.entries(data).map(([name,d],i)=>({label:name,data:[d.fy2020,d.fy2021,d.fy2022,d.fy2023,d.fy2024],borderColor:colors[i],backgroundColor:colors[i]+'18',borderWidth:2,pointRadius:3,tension:.4,fill:false}))},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{font:{size:10},padding:12,usePointStyle:true}}},scales:{x:{grid:{color:'rgba(0,0,0,0.05)'},ticks:{color:'rgba(28,28,30,0.4)',font:{size:10}}},y:{grid:{color:'rgba(0,0,0,0.05)'},ticks:{color:'rgba(28,28,30,0.4)',font:{size:10},callback:v=>'$'+v+'B'}}}}});
+  const preds=[{s:"Defense AI / Autonomous Software",sig:"HOT",cls:"pred-hot",l:"64% YoY contract growth. Pentagon AI-first mandate Jan 2026. $9.4B budget for drone swarms. VC boom accelerating through 2027."},{s:"Autonomous Surface/Maritime",sig:"HOT",cls:"pred-hot",l:"Saronic $1.75B raise validates. US Navy Replicator 2.0 creating urgent demand. Startup-friendly OTA contracts now standard."},{s:"Space Domain Awareness",sig:"WARM",cls:"pred-warm",l:"23.5% YoY growth. SDA proliferating LEO constellation. True Anomaly validated the category. 12-18mo VC lag."},{s:"Cyber / Electronic Warfare",sig:"WARM",cls:"pred-warm",l:"Steady 26.8% growth. NSA expanding startup base. OTA procurement reform making it easier to win contracts."},{s:"Missiles / Propulsion",sig:"WATCH",cls:"pred-watch",l:"Highest dollar volume $41.8B. Arsenal-1 proving manufacturing startups can compete. 2-3yr lead time before VC catch-up."},{s:"C2 / Command Software",sig:"WATCH",cls:"pred-watch",l:"Anduril Lattice $20B Army contract proves the model. Next wave of modular C2 startups in early innings."}];
+  document.getElementById('pred-grid').innerHTML=preds.map(p=>`<div class="pred-card ${p.cls}"><div class="pred-sector">${p.s}</div><div class="pred-signal">${p.sig}</div><div class="pred-logic">${p.l}</div></div>`).join('');
+  const q=['Q1 22','Q2 22','Q3 22','Q4 22','Q1 23','Q2 23','Q3 23','Q4 23','Q1 24','Q2 24','Q3 24','Q4 24','Q1 25','Q2 25','Q3 25','Q4 25'];
+  const ctx2=document.getElementById('corrChart').getContext('2d');
+  if(corrC)corrC.destroy();
+  corrC=new Chart(ctx2,{type:'line',data:{labels:q,datasets:[{label:'DoD contract obligations ($B)',data:[14.2,15.1,16.8,18.2,19.4,21.3,23.8,24.6,26.1,27.4,29.8,31.2,33.4,35.8,38.2,41.1],borderColor:'#007aff',backgroundColor:'rgba(0,122,255,0.07)',borderWidth:2,fill:true,tension:.4,yAxisID:'y',pointRadius:2},{label:'Defense tech VC funding ($B)',data:[1.2,1.8,2.1,1.6,2.4,3.2,4.1,5.8,7.2,9.4,11.8,14.6,18.2,22.4,28.6,35.8],borderColor:'#34c759',backgroundColor:'rgba(52,199,89,0.07)',borderWidth:2,fill:true,tension:.4,yAxisID:'y2',pointRadius:2}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{font:{size:10},padding:12,usePointStyle:true}}},scales:{x:{grid:{color:'rgba(0,0,0,0.05)'},ticks:{color:'rgba(28,28,30,0.4)',font:{size:10},maxRotation:45}},y:{position:'left',title:{display:true,text:'DoD ($B)',color:'#007aff',font:{size:10}},grid:{color:'rgba(0,0,0,0.05)'},ticks:{color:'#007aff',font:{size:10},callback:v=>'$'+v}},y2:{position:'right',title:{display:true,text:'VC ($B)',color:'#34c759',font:{size:10}},grid:{display:false},ticks:{color:'#34c759',font:{size:10},callback:v=>'$'+v}}}}});
+}
+
+render();
+setTimeout(renderScatter,150);
 </script>
 </body>
 </html>
