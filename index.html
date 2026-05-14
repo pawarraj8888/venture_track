@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Venture Growth Signal v3 — GoalVest Universe</title>
+<title>Venture Growth Signal v3 — Market Universe</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -173,7 +173,7 @@ h1{font-size:48px;font-weight:700;letter-spacing:-.035em;line-height:1.06;color:
 <div class="page">
 
 <div class="header">
-  <div class="eye"><span class="eye-line"></span>GoalVest Fund II &middot; Quant Signal Engine v3</div>
+  <div class="eye"><span class="eye-line"></span>Private Market &middot; Quant Signal Engine v3</div>
   <h1>Venture Growth<br>Signal Dashboard</h1>
   <p class="hsub">Quantitative scoring of 40+ late-stage private companies, live DoD contract spending signals, and AI-powered buy recommendations for Fund II.</p>
 </div>
@@ -234,17 +234,17 @@ h1{font-size:48px;font-weight:700;letter-spacing:-.035em;line-height:1.06;color:
 <div id="tab-recs" class="hidden">
   <div class="rec-hero gl">
     <div class="rec-title">Fund II Buy Recommendations</div>
-    <div class="rec-sub">Top conviction ideas ranked by composite score, valuation entry attractiveness, exit clarity, and GoalVest thesis alignment. Updated May 2026.</div>
+    <div class="rec-sub">Top conviction ideas ranked by composite score, valuation entry attractiveness, exit clarity, and sector alignment. Updated May 2026.</div>
     <div class="rec-methodology">
       <div class="rec-meth-title">Methodology</div>
-      <div class="rec-meth-text">Rankings derived from five quantitative factors: revenue growth (30%), gross margin quality (20%), secondary entry price vs public comps (20%), NRR proxy (15%), burn efficiency (15%). Thesis alignment scores for GoalVest's four target sectors: AI application layer, defense tech, fintech infrastructure, and consumer health. Exit path clarity assessed by IPO probability and strategic acquirer universe. All data sourced from PitchBook, Crunchbase, company press releases, and Sacra estimates as of May 2026.</div>
+      <div class="rec-meth-text">Rankings derived from five quantitative factors: revenue growth (30%), gross margin quality (20%), secondary entry price vs public comps (20%), NRR proxy (15%), burn efficiency (15%). Sector alignment scores focus on four target areas: AI application layer, defense tech, fintech infrastructure, and consumer health. Exit path clarity assessed by IPO probability and strategic acquirer universe. All data sourced from PitchBook, Crunchbase, company press releases, and Sacra estimates as of May 2026.</div>
     </div>
   </div>
 
   <div class="tier-section">
     <div class="tier-header">
       <span class="tier-badge tier1-badge">Tier 1 — Highest conviction</span>
-      <span class="tier-desc">Strong fundamentals, clear exit path, attractive entry, direct GoalVest thesis fit</span>
+      <span class="tier-desc">Strong fundamentals, clear exit path, attractive entry, direct sector fit</span>
     </div>
     <div class="rec-grid" id="tier1-grid"></div>
   </div>
@@ -305,7 +305,7 @@ h1{font-size:48px;font-weight:700;letter-spacing:-.035em;line-height:1.06;color:
     <div class="srcrow"><span class="srcdot"></span><span>Monte Carlo: 10,000 simulations, log-normal distribution with fat tails</span></div>
   </div>
 </div>
-<div class="byline">Built by <a href="https://pawarraj8888.github.io/venture_track/" target="_blank">Rajvardhan Pawar</a> &middot; NYU MFE &middot; GoalVest Associate Application &middot; May 2026</div>
+<div class="byline">Built by <a href="https://pawarraj8888.github.io/venture_track/" target="_blank">Rajvardhan Pawar</a> &middot; NYU MFE &middot; May 2026</div>
 </div>
 
 <script>
@@ -332,20 +332,20 @@ const cos=[
   {name:"Ramp",sector:"Fintech",init:"RA",ab:"rgba(0,122,255,0.12)",ac:"#007aff",val:32,rev:1.0,gr:100,gm:72,bm:0.9,nrr:138,pcm:10,oe:24,sig:"strong",arr:"$1B+ ARR",rwy:"FCF positive",emp:"1200",kr:"Brex competition, corporate spend softness risk",src:"Series E-2 $300M (Nov 2025, $32B). Lightspeed led.",lastRound:{name:"Series E-2",amount:"$300M",val:"$32B",date:"Nov 2025",inv:"Lightspeed, Founders Fund"},history:[{r:"Series D",a:"$750M",v:"$8.1B",y:"2022"},{r:"Series E",a:"$200M",v:"$16B",y:"Jun 2025"},{r:"Series E-2",a:"$300M",v:"$32B",y:"Nov 2025"}]},
   {name:"Klarna",sector:"Fintech",init:"KL",ab:"rgba(175,82,222,0.12)",ac:"#af52de",val:15,rev:2.8,gr:24,gm:58,bm:0.8,nrr:112,pcm:8,oe:12,sig:"moderate",arr:"$2.8B rev (profitable)",rwy:"Profitable",emp:"3800",kr:"BNPL regulatory pressure",src:"IPO S-1 filed 2025. Last private $800M (2022, $6.7B). Public market implied ~$15B.",lastRound:{name:"Pre-IPO",amount:"$800M",val:"$6.7B",date:"2022",inv:"SoftBank, Sequoia"},history:[{r:"Peak round",a:"$639M",v:"$45.6B",y:"2021"},{r:"Down round",a:"$800M",v:"$6.7B",y:"2022"},{r:"IPO filed",a:"S-1",v:"~$15B",y:"2025"}]},
   {name:"Chime",sector:"Fintech",init:"CH",ab:"rgba(175,82,222,0.1)",ac:"#bf5af2",val:25,rev:1.3,gr:18,gm:62,bm:1.1,nrr:108,pcm:10,oe:22,sig:"watch",arr:"$1.3B revenue",rwy:"24mo",emp:"1500",kr:"Valuation vs growth mismatch, no new round since 2021",src:"Last round $750M (2021, $25B). Revenue from Bloomberg 2025.",lastRound:{name:"Series G",amount:"$750M",val:"$25B",date:"Aug 2021",inv:"SoftBank, Tiger Global"},history:[{r:"Series F",a:"$485M",v:"$14.5B",y:"2020"},{r:"Series G",a:"$750M",v:"$25B",y:"Aug 2021"}]},
-  {name:"Stripe",sector:"Fintech",init:"ST",ab:"rgba(0,122,255,0.12)",ac:"#007aff",val:129,rev:19,gr:25,gm:65,bm:0.5,nrr:118,pcm:8,oe:100,sig:"moderate",arr:"$19B revenue",rwy:"Profitable",emp:"8000",kr:"Too large for GoalVest check size, IPO imminent",src:"Secondary implied $129B (Dec 2025). $1.4T payment volume. Profitable.",lastRound:{name:"Secondary",amount:"Tender",val:"$129B",date:"Dec 2025",inv:"Employee secondary"},history:[{r:"Series H",a:"$600M",v:"$95B",y:"2021"},{r:"Down round",a:"$6.5B",v:"$50B",y:"2023"},{r:"Secondary",a:"Tender",v:"$129B",y:"Dec 2025"}]},
+  {name:"Stripe",sector:"Fintech",init:"ST",ab:"rgba(0,122,255,0.12)",ac:"#007aff",val:129,rev:19,gr:25,gm:65,bm:0.5,nrr:118,pcm:8,oe:100,sig:"moderate",arr:"$19B revenue",rwy:"Profitable",emp:"8000",kr:"Too large for many fund check sizes, IPO imminent",src:"Secondary implied $129B (Dec 2025). $1.4T payment volume. Profitable.",lastRound:{name:"Secondary",amount:"Tender",val:"$129B",date:"Dec 2025",inv:"Employee secondary"},history:[{r:"Series H",a:"$600M",v:"$95B",y:"2021"},{r:"Down round",a:"$6.5B",v:"$50B",y:"2023"},{r:"Secondary",a:"Tender",v:"$129B",y:"Dec 2025"}]},
   {name:"Rippling",sector:"Fintech",init:"RP",ab:"rgba(52,199,89,0.1)",ac:"#34c759",val:16.8,rev:0.57,gr:55,gm:70,bm:1.2,nrr:135,pcm:12,oe:13,sig:"strong",arr:"$570M ARR",rwy:"30mo",emp:"3000",kr:"Workday/SAP competition at enterprise, HR tech saturation",src:"Series F $530M (2024, $13.5B). Now $16.8B valuation.",lastRound:{name:"Series F",amount:"$530M",val:"$13.5B",date:"Apr 2024",inv:"Coatue, Kleiner Perkins"},history:[{r:"Series D",a:"$250M",v:"$6.5B",y:"2022"},{r:"Series E",a:"$500M",v:"$11.25B",y:"2023"},{r:"Series F",a:"$530M",v:"$13.5B",y:"Apr 2024"}]},
   {name:"Brex",sector:"Fintech",init:"BX",ab:"rgba(255,149,0,0.12)",ac:"#ff9500",val:12,rev:0.5,gr:40,gm:68,bm:1.1,nrr:125,pcm:11,oe:9.5,sig:"moderate",arr:"$500M ARR est.",rwy:"30mo",emp:"1400",kr:"Ramp competition, lost SMB focus",src:"Series D $300M (2022, $12.3B). Valuation roughly flat since peak.",lastRound:{name:"Series D",amount:"$300M",val:"$12.3B",date:"2022",inv:"Tiger Global, Greenoaks"},history:[{r:"Series C",a:"$425M",v:"$7.4B",y:"2021"},{r:"Series D",a:"$300M",v:"$12.3B",y:"2022"}]},
   {name:"Plaid",sector:"Fintech",init:"PL",ab:"rgba(0,122,255,0.1)",ac:"#007aff",val:6.1,rev:0.35,gr:35,gm:72,bm:1.0,nrr:128,pcm:14,oe:5,sig:"moderate",arr:"$350M ARR est.",rwy:"Profitable",emp:"900",kr:"Open banking regulation risk, Visa acquisition blocked",src:"Secondary tender $575M (Apr 2025, $6.1B). Crunchbase rates IPO very likely 2026.",lastRound:{name:"Secondary",amount:"$575M",val:"$6.1B",date:"Apr 2025",inv:"Employee secondary"},history:[{r:"Series D",a:"$425M",v:"$13.4B",y:"2021"},{r:"Down secondary",a:"$575M",v:"$6.1B",y:"Apr 2025"}]},
 
   // DATA / INFRASTRUCTURE
-  {name:"Databricks",sector:"Data",init:"DB",ab:"rgba(255,59,48,0.12)",ac:"#ff3b30",val:134,rev:4.8,gr:55,gm:78,bm:0.6,nrr:142,pcm:15,oe:100,sig:"moderate",arr:"$4.8B ARR",rwy:"FCF positive",emp:"6000",kr:"Too large for GoalVest check size, but secondary possible",src:"Series L $5B (Feb 2026, $134B). Third raise in one year. Insight Partners led.",lastRound:{name:"Series L",amount:"$5B",val:"$134B",date:"Feb 2026",inv:"Insight Partners, JP Morgan, a16z"},history:[{r:"Series I",a:"$1.6B",v:"$43B",y:"2023"},{r:"Series J",a:"$500M",v:"$62B",y:"2024"},{r:"Series K",a:"$10B",v:"$62B",y:"2024"},{r:"Series L",a:"$5B",v:"$134B",y:"Feb 2026"}]},
+  {name:"Databricks",sector:"Data",init:"DB",ab:"rgba(255,59,48,0.12)",ac:"#ff3b30",val:134,rev:4.8,gr:55,gm:78,bm:0.6,nrr:142,pcm:15,oe:100,sig:"moderate",arr:"$4.8B ARR",rwy:"FCF positive",emp:"6000",kr:"Too large for many fund check sizes, but secondary possible",src:"Series L $5B (Feb 2026, $134B). Third raise in one year. Insight Partners led.",lastRound:{name:"Series L",amount:"$5B",val:"$134B",date:"Feb 2026",inv:"Insight Partners, JP Morgan, a16z"},history:[{r:"Series I",a:"$1.6B",v:"$43B",y:"2023"},{r:"Series J",a:"$500M",v:"$62B",y:"2024"},{r:"Series K",a:"$10B",v:"$62B",y:"2024"},{r:"Series L",a:"$5B",v:"$134B",y:"Feb 2026"}]},
   {name:"Canva",sector:"Data",init:"CV",ab:"rgba(52,199,89,0.12)",ac:"#34c759",val:42,rev:3.5,gr:30,gm:80,bm:0.4,nrr:125,pcm:12,oe:35,sig:"moderate",arr:"$3.5B ARR",rwy:"8yr profitable",emp:"4500",kr:"Adobe competition, valuation stretched",src:"Secondary $3.6B (Nov 2025, $42B). 240M MAU, 95% Fortune 500.",lastRound:{name:"Secondary",amount:"$3.6B",val:"$42B",date:"Nov 2025",inv:"Employee tender"},history:[{r:"Series F",a:"$200M",v:"$40B",y:"2021"},{r:"Secondary",a:"$3.6B",v:"$42B",y:"Nov 2025"}]},
   {name:"Waymo",sector:"Data",init:"WM",ab:"rgba(0,122,255,0.12)",ac:"#007aff",val:126,rev:0.5,gr:200,gm:40,bm:5.0,nrr:130,pcm:10,oe:100,sig:"watch",arr:"$500M rev est.",rwy:"36mo",emp:"3500",kr:"Extreme burn, hardware capex, regulatory risk",src:"Series raised $16B (Q1 2026, $126B). Alphabet subsidiary.",lastRound:{name:"Latest round",amount:"$16B",val:"$126B",date:"Q1 2026",inv:"Alphabet, T. Rowe Price, Andreessen Horowitz"},history:[{r:"Previous",a:"$5.6B",v:"$45B",y:"2023"},{r:"New round",a:"$16B",v:"$126B",y:"Q1 2026"}]},
   {name:"Crusoe",sector:"Data",init:"CR",ab:"rgba(255,149,0,0.12)",ac:"#ff9500",val:10,rev:0.4,gr:150,gm:45,bm:2.2,nrr:140,pcm:12,oe:8,sig:"moderate",arr:"$400M rev est.",rwy:"24mo",emp:"600",kr:"AI infrastructure crowded, CoreWeave direct competitor",src:"Series E $1.4B (Oct 2025, $10B+). AI data center focused.",lastRound:{name:"Series E",amount:"$1.4B",val:"$10B+",date:"Oct 2025",inv:"Founders Fund, Bain Capital"},history:[{r:"Series C",a:"$350M",v:"$2.4B",y:"2023"},{r:"Series D",a:"$686M",v:"$3.2B",y:"2024"},{r:"Series E",a:"$1.4B",v:"$10B+",y:"Oct 2025"}]},
 
   // CONSUMER
   {name:"OLIPOP",sector:"Consumer",init:"OL",ab:"rgba(255,149,0,0.12)",ac:"#ff9500",val:1.8,rev:0.4,gr:65,gm:48,bm:1.3,nrr:125,pcm:6,oe:1.5,sig:"moderate",arr:"$400M revenue",rwy:"18mo",emp:"300",kr:"CPG margin compression, distribution concentration",src:"Series C $50M (2023, $1.85B). Revenue from Forbes 2024.",lastRound:{name:"Series C",amount:"$50M",val:"$1.85B",date:"2023",inv:"Coefficient Capital, Monogram"},history:[{r:"Series B",a:"$40M",v:"$500M",y:"2022"},{r:"Series C",a:"$50M",v:"$1.85B",y:"2023"}]},
-  {name:"Revolut",sector:"Fintech",init:"RV",ab:"rgba(175,82,222,0.12)",ac:"#af52de",val:75,rev:5.3,gr:40,gm:60,bm:0.6,nrr:118,pcm:8,oe:60,sig:"watch",arr:"$5.3B projected rev",rwy:"Profitable",emp:"8000",kr:"Too large for GoalVest, UK banking license just obtained",src:"$45B valuation (Aug 2024). Now $75B secondary market. $1B profit.",lastRound:{name:"Secondary",amount:"Employee",val:"$75B",date:"Nov 2025",inv:"Employee secondary"},history:[{r:"Series E",a:"$800M",v:"$33B",y:"2021"},{r:"Series E ext.",a:"$45B",v:"$45B val",y:"Aug 2024"},{r:"Secondary",a:"Tender",v:"$75B",y:"Nov 2025"}]},
+  {name:"Revolut",sector:"Fintech",init:"RV",ab:"rgba(175,82,222,0.12)",ac:"#af52de",val:75,rev:5.3,gr:40,gm:60,bm:0.6,nrr:118,pcm:8,oe:60,sig:"watch",arr:"$5.3B projected rev",rwy:"Profitable",emp:"8000",kr:"Too large for many funds, UK banking license just obtained",src:"$45B valuation (Aug 2024). Now $75B secondary market. $1B profit.",lastRound:{name:"Secondary",amount:"Employee",val:"$75B",date:"Nov 2025",inv:"Employee secondary"},history:[{r:"Series E",a:"$800M",v:"$33B",y:"2021"},{r:"Series E ext.",a:"$45B",v:"$45B val",y:"Aug 2024"},{r:"Secondary",a:"Tender",v:"$75B",y:"Nov 2025"}]},
 
   // ROBOTICS
   {name:"Figure AI",sector:"Robotics",init:"FG",ab:"rgba(255,59,48,0.12)",ac:"#ff3b30",val:39,rev:0.05,gr:500,gm:35,bm:4.0,nrr:130,pcm:15,oe:30,sig:"watch",arr:"$50M est.",rwy:"24mo",emp:"400",kr:"Extreme burn, hardware manufacturing unproven at scale",src:"Series B $675M (Feb 2024, $2.6B). Now valued at ~$39B in secondaries.",lastRound:{name:"Series B",amount:"$675M",val:"$2.6B",date:"Feb 2024",inv:"OpenAI, Microsoft, Nvidia, BMW"},history:[{r:"Series A",a:"$70M",v:"$500M",y:"2023"},{r:"Series B",a:"$675M",v:"$2.6B",y:"Feb 2024"}]},
